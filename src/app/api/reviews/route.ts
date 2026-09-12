@@ -1,10 +1,12 @@
 /**
  * POST /api/reviews — приём отзыва (публикуется после модерации).
- * Владелец файла: Агент 4. СТАТУС: рабочая заглушка.
+ * Владелец файла: Агент 4. Отзыв проверяется, логируется и уходит
+ * владельцу в Telegram; публикация — вручную после модерации.
  */
 
 import { NextResponse } from 'next/server';
 
+import { checkRateLimit, clientIp } from '@/lib/rate-limit';
 import { notifyNewReview } from '@/lib/notify';
 import { hasErrors, isSpam, validateReview } from '@/lib/validation';
 import type { ReviewRequest, ReviewResponse } from '@/types';
@@ -18,6 +20,18 @@ export async function POST(request: Request): Promise<NextResponse<ReviewRespons
     return NextResponse.json(
       { ok: false, error: { code: 'VALIDATION_ERROR', message: 'Некорректный запрос' } },
       { status: 400 },
+    );
+  }
+
+  // Третий уровень антиспама (контракт п.6.4): не больше 5 отправок с IP за 10 минут.
+  const limit = checkRateLimit(`reviews:${clientIp(request)}`);
+  if (!limit.allowed) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: { code: 'RATE_LIMITED', message: 'Слишком много отзывов подряд. Попробуйте через несколько минут.' },
+      },
+      { status: 429, headers: { 'Retry-After': String(limit.retryAfterSec) } },
     );
   }
 

@@ -1,12 +1,13 @@
 /**
  * POST /api/leads — приём заявки.
  * Владелец файла: Агент 4. Контракт запроса/ответа: src/types/api.ts.
- * СТАТУС: рабочая заглушка — валидация и антиспам настоящие,
- * доставка уведомления пока в src/lib/notify.ts (TODO).
+ * Валидация, антиспам (honeypot + таймтрап + лимит по IP) и доставка
+ * уведомления в Telegram — рабочие.
  */
 
 import { NextResponse } from 'next/server';
 
+import { checkRateLimit, clientIp } from '@/lib/rate-limit';
 import { notifyNewLead } from '@/lib/notify';
 import { hasErrors, isSpam, toE164, validateLead } from '@/lib/validation';
 import type { LeadRequest, LeadResponse } from '@/types';
@@ -20,6 +21,18 @@ export async function POST(request: Request): Promise<NextResponse<LeadResponse>
     return NextResponse.json(
       { ok: false, error: { code: 'VALIDATION_ERROR', message: 'Некорректный запрос' } },
       { status: 400 },
+    );
+  }
+
+  // Третий уровень антиспама (контракт п.6.4): не больше 5 отправок с IP за 10 минут.
+  const limit = checkRateLimit(`leads:${clientIp(request)}`);
+  if (!limit.allowed) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: { code: 'RATE_LIMITED', message: 'Слишком много заявок подряд. Попробуйте через несколько минут.' },
+      },
+      { status: 429, headers: { 'Retry-After': String(limit.retryAfterSec) } },
     );
   }
 
