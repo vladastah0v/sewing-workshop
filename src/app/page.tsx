@@ -30,6 +30,12 @@ export default function HomePage() {
         title="Ремонт и пошив одежды"
         subtitle="Подгоним по фигуре, отремонтируем и сошьём с нуля. Срок от 1 дня."
         highlights={['Срок от 1 дня', 'Гарантия 30 дней', 'Бесплатная примерка']}
+        image={{
+          src: '/images/ui/hero-workshop.jpg',
+          alt: 'Мастер за швейной машиной подгоняет пальто по фигуре',
+          width: 1280,
+          height: 960,
+        }}
         primaryCta={{ label: 'Оставить заявку', href: '#request' }}
         secondaryCta={{ label: 'Посмотреть цены', href: '/prices' }}
       />
