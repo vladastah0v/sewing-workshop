@@ -1,16 +1,27 @@
-/**
- * Badge — ЗАГЛУШКА.
- * Владелец: Агент 1 — ядро.
- * Контракт пропсов: BadgeProps в src/types/ui.ts — сигнатуру менять нельзя,
- * только через правку docs/CONTRACTS.md и согласование с другими агентами.
- */
-
 import type { BadgeProps } from '@/types';
+import { cn } from '@/lib/utils';
 
-export function Badge(props: BadgeProps) {
+const TONES = {
+  neutral: 'bg-bg-muted text-text-muted',
+  accent: 'bg-accent-subtle text-brand-700',
+  success: 'bg-success/12 text-success',
+  warning: 'bg-warning/12 text-warning',
+  error: 'bg-error/12 text-error',
+} as const;
+
+/** Статусный бейдж. Владелец: Агент 1. */
+export function Badge({ tone = 'neutral', children, className, id }: BadgeProps) {
   return (
-    <div id={props.id} className={props.className} data-stub="Badge">
-      {props.children}
-    </div>
+    <span
+      id={id}
+      className={cn(
+        'inline-flex items-center gap-1 rounded-full px-3 py-1',
+        'text-sm font-medium whitespace-nowrap',
+        TONES[tone],
+        className,
+      )}
+    >
+      {children}
+    </span>
   );
 }

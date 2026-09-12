@@ -124,20 +124,6 @@ export interface FaqItem {
   category?: ServiceSlug;
 }
 
-export interface BlogPost {
-  id: string;
-  slug: string;
-  title: string;
-  excerpt: string;
-  /** HTML или MDX-строка — формат фиксируется при подключении CMS. */
-  body?: string;
-  cover?: ImageAsset;
-  publishedAt: string;          // ISO 8601
-  readingMinutes?: number;
-  tags?: string[];
-  seo?: SeoMeta;
-}
-
 /** День недели: 1 = понедельник ... 7 = воскресенье (ISO-8601). */
 export type WeekdayIso = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 

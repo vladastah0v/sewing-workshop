@@ -8,7 +8,6 @@
 import type { ReactNode } from 'react';
 import type { ApiError, LeadSource, LeadResponseData, ReviewResponseData } from './api';
 import type {
-  BlogPost,
   BreadcrumbItem,
   ContactInfoData,
   FaqItem,
@@ -68,6 +67,12 @@ export interface FieldProps extends BaseProps {
   error?: string;
   required?: boolean;
   disabled?: boolean;
+}
+
+export interface FormFieldProps extends FieldProps {
+  /** id контрола внутри — связывает label, подсказку и сообщение об ошибке. */
+  controlId: string;
+  children: ReactNode;
 }
 
 export interface InputProps extends FieldProps {
@@ -190,7 +195,7 @@ export interface EmptyStateProps extends BaseProps {
 export interface ContainerProps extends BaseProps {
   /** 'default' = 1280px, 'narrow' = 720px, 'full' = без ограничения. */
   width?: 'default' | 'narrow' | 'full';
-  as?: 'div' | 'section' | 'main' | 'footer' | 'header';
+  as?: 'div' | 'section' | 'main' | 'footer' | 'header' | 'nav';
   children: ReactNode;
 }
 
@@ -290,14 +295,6 @@ export interface CalculatorFormProps extends BaseProps {
   services: Service[];
   source?: LeadSource; // default: 'calculator'
   onEstimate?: (estimate: { min: number; max: number }) => void;
-}
-
-export interface BookingFormProps extends BaseProps {
-  source?: LeadSource;
-  /** Сколько дней вперёд доступно для записи. default: 14 */
-  daysAhead?: number;
-  onSuccess?: (data: { bookingId: string }) => void;
-  onError?: (error: ApiError) => void;
 }
 
 export interface ConsentCheckboxProps extends BaseProps {
@@ -419,10 +416,6 @@ export interface MapEmbedProps extends BaseProps {
   zoom?: number; // default: 16
   markerTitle?: string;
   height?: string; // default: '400px'
-}
-
-export interface BlogCardProps extends BaseProps {
-  post: BlogPost;
 }
 
 /* ------------------------------------------------------------------ */

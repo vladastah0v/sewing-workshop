@@ -1,18 +1,152 @@
 'use client';
 
-/**
- * Header — ЗАГЛУШКА.
- * Владелец: Агент 1 — ядро.
- * Контракт пропсов: HeaderProps в src/types/ui.ts — сигнатуру менять нельзя,
- * только через правку docs/CONTRACTS.md и согласование с другими агентами.
- */
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-import type { HeaderProps } from '@/types';
+import type { HeaderProps, NavLink } from '@/types';
+import { cn, formatPhone } from '@/lib/utils';
+import { ANALYTICS_EVENTS, SITE_NAME } from '@/lib/constants';
+import { track } from '@/lib/analytics';
+import { Button } from '@/components/ui/Button';
+import { Container } from '@/components/ui/Container';
+import { Icon } from '@/components/ui/Icon';
 
-export function Header(props: HeaderProps) {
+/** Шапка: логотип, меню с одним уровнем вложенности, телефон, CTA. */
+export function Header({ nav, contacts, transparent = false, className, id }: HeaderProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Переход на другую страницу закрывает мобильное меню.
+  useEffect(() => setMenuOpen(false), [pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
   return (
-    <div id={props.id} className={props.className} data-stub="Header">
-      Header
-    </div>
+    <header
+      id={id}
+      className={cn(
+        'sticky top-0 z-[var(--z-header)] border-b border-border',
+        transparent && !menuOpen ? 'bg-bg/95 backdrop-blur' : 'bg-bg',
+        className,
+      )}
+    >
+      <Container className="flex h-[4.5rem] items-center justify-between gap-6">
+        <Link href="/" className="font-heading text-xl whitespace-nowrap">
+          {SITE_NAME}
+        </Link>
+
+        <nav aria-label="Основное меню" className="hidden lg:block">
+          <ul className="flex items-center gap-1">
+            {nav.map((item) => (
+              <DesktopItem key={item.href} item={item} pathname={pathname} />
+            ))}
+          </ul>
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <a
+            href={`tel:${contacts.phone}`}
+            onClick={() => track(ANALYTICS_EVENTS.phoneClick, { place: 'header' })}
+            className="hidden font-semibold whitespace-nowrap hover:text-accent md:inline"
+          >
+            {formatPhone(contacts.phone)}
+          </a>
+          <Button href="/contacts" size="sm" className="hidden sm:inline-flex">
+            Оставить заявку
+          </Button>
+          <button
+            type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
+            className="grid size-11 place-items-center rounded-lg hover:bg-bg-muted lg:hidden"
+          >
+            <Icon name={menuOpen ? 'close' : 'menu'} size={24} />
+          </button>
+        </div>
+      </Container>
+
+      <div
+        id="mobile-menu"
+        hidden={!menuOpen}
+        className="h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-border bg-bg lg:hidden"
+      >
+        <Container as="nav" className="flex flex-col gap-1 py-6">
+          {nav.map((item) => (
+            <div key={item.href} className="flex flex-col">
+              <Link
+                href={item.href}
+                className="flex min-h-11 items-center rounded-lg px-3 text-lg font-medium hover:bg-bg-muted"
+              >
+                {item.label}
+              </Link>
+              {item.children?.map((child) => (
+                <Link
+                  key={child.href}
+                  href={child.href}
+                  className="flex min-h-11 items-center rounded-lg pr-3 pl-7 text-text-muted hover:bg-bg-muted"
+                >
+                  {child.label}
+                </Link>
+              ))}
+            </div>
+          ))}
+          <Button href="/contacts" fullWidth className="mt-4">
+            Оставить заявку
+          </Button>
+        </Container>
+      </div>
+    </header>
+  );
+}
+
+function DesktopItem({ item, pathname }: { item: NavLink; pathname: string }) {
+  const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+
+  return (
+    <li className="group relative">
+      <Link
+        href={item.href}
+        aria-current={active ? 'page' : undefined}
+        className={cn(
+          'flex h-11 items-center gap-1 rounded-lg px-3 font-medium',
+          'hover:bg-bg-muted',
+          active && 'text-accent',
+        )}
+      >
+        {item.label}
+        {item.children && <Icon name="chevron-down" size={16} />}
+      </Link>
+
+      {item.children && (
+        <ul
+          className={cn(
+            'invisible absolute top-full left-0 z-[var(--z-dropdown)] min-w-56 opacity-0',
+            'rounded-xl border border-border bg-surface p-2 shadow-md',
+            'transition-opacity duration-[var(--duration-fast)] ease-standard',
+            'group-hover:visible group-hover:opacity-100',
+            'group-focus-within:visible group-focus-within:opacity-100',
+          )}
+        >
+          {item.children.map((child) => (
+            <li key={child.href}>
+              <Link
+                href={child.href}
+                className="flex min-h-11 items-center rounded-lg px-3 hover:bg-bg-muted"
+              >
+                {child.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </li>
   );
 }

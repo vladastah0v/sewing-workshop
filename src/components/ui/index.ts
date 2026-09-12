@@ -1,5 +1,6 @@
 export { Button } from './Button';
 export { Icon } from './Icon';
+export { FormField } from './FormField';
 export { Input } from './Input';
 export { Textarea } from './Textarea';
 export { Select } from './Select';

@@ -9,8 +9,6 @@ import { API_ROUTES } from './constants';
 import type {
   ApiError,
   ApiResponse,
-  BookingRequest,
-  BookingResponseData,
   LeadRequest,
   LeadResponseData,
   ReviewRequest,
@@ -46,10 +44,6 @@ export function submitLead(payload: LeadRequest) {
 
 export function submitReview(payload: ReviewRequest) {
   return postJson<ReviewRequest, ReviewResponseData>(API_ROUTES.reviews, payload);
-}
-
-export function submitBooking(payload: BookingRequest) {
-  return postJson<BookingRequest, BookingResponseData>(API_ROUTES.booking, payload);
 }
 
 export async function uploadAttachment(

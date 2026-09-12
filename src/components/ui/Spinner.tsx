@@ -1,16 +1,19 @@
-/**
- * Spinner — ЗАГЛУШКА.
- * Владелец: Агент 1 — ядро.
- * Контракт пропсов: SpinnerProps в src/types/ui.ts — сигнатуру менять нельзя,
- * только через правку docs/CONTRACTS.md и согласование с другими агентами.
- */
-
 import type { SpinnerProps } from '@/types';
+import { cn } from '@/lib/utils';
 
-export function Spinner(props: SpinnerProps) {
+const SIZES = { sm: 'size-4 border-2', md: 'size-5 border-2', lg: 'size-7 border-[3px]' } as const;
+
+/** Индикатор загрузки (ТЗ п.6.2). Владелец: Агент 1. */
+export function Spinner({ size = 'md', label = 'Загрузка', className, id }: SpinnerProps) {
   return (
-    <div id={props.id} className={props.className} data-stub="Spinner">
-      Spinner
-    </div>
+    <span id={id} role="status" className={cn('inline-flex items-center', className)}>
+      <span
+        className={cn(
+          'animate-spin rounded-full border-current border-r-transparent opacity-70',
+          SIZES[size],
+        )}
+      />
+      <span className="visually-hidden">{label}</span>
+    </span>
   );
 }

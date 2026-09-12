@@ -120,34 +120,3 @@ export interface UploadResponseData {
 }
 
 export type UploadResponse = ApiResponse<UploadResponseData>;
-
-/* ------------------------------------------------------------------ */
-/* POST /api/booking — онлайн-запись (ТЗ п.5.6, опционально)           */
-/* ------------------------------------------------------------------ */
-
-export interface BookingRequest {
-  name: string;
-  phone: string;
-  serviceType: ServiceSlug;
-  /** ISO 8601 дата-время начала визита с офсетом. */
-  startsAt: string;
-  comment?: string;
-  consent: true;
-  hpField: string;
-  renderedAt: number;
-}
-
-export interface BookingResponseData {
-  bookingId: string;
-  startsAt: string;
-  message: string;
-}
-
-export type BookingResponse = ApiResponse<BookingResponseData>;
-
-/** Свободные слоты: GET /api/booking/slots?date=YYYY-MM-DD */
-export interface BookingSlot {
-  /** ISO 8601 с офсетом. */
-  startsAt: string;
-  available: boolean;
-}

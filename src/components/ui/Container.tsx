@@ -1,16 +1,23 @@
-/**
- * Container — ЗАГЛУШКА.
- * Владелец: Агент 1 — ядро.
- * Контракт пропсов: ContainerProps в src/types/ui.ts — сигнатуру менять нельзя,
- * только через правку docs/CONTRACTS.md и согласование с другими агентами.
- */
-
 import type { ContainerProps } from '@/types';
+import { cn } from '@/lib/utils';
 
-export function Container(props: ContainerProps) {
+const WIDTHS = {
+  default: 'max-w-[var(--container-max)]',
+  narrow: 'max-w-[var(--container-narrow)]',
+  full: '',
+} as const;
+
+/**
+ * Container — единственное место, где задаются боковые поля.
+ * Владелец: Агент 1. Гарантирует минимум 16px по краям на любой ширине (ТЗ п.6.3).
+ */
+export function Container({ width = 'default', as: Tag = 'div', children, className, id }: ContainerProps) {
   return (
-    <div id={props.id} className={props.className} data-stub="Container">
-      {props.children}
-    </div>
+    <Tag
+      id={id}
+      className={cn('mx-auto w-full px-[var(--container-gutter)]', WIDTHS[width], className)}
+    >
+      {children}
+    </Tag>
   );
 }

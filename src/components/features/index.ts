@@ -12,4 +12,3 @@ export { ProcessSteps } from './ProcessSteps';
 export { ContactInfo } from './ContactInfo';
 export { WorkStatusBadge } from './WorkStatusBadge';
 export { MapEmbed } from './MapEmbed';
-export { BlogCard } from './BlogCard';

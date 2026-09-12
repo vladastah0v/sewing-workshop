@@ -48,7 +48,6 @@ export const MAIN_NAV: NavLink[] = [
   { label: 'Отзывы', href: '/reviews' },
   { label: 'О мастерской', href: '/about' },
   { label: 'Как мы работаем', href: '/process' },
-  { label: 'Блог', href: '/blog' },
   { label: 'Контакты', href: '/contacts' },
 ];
 
@@ -57,8 +56,6 @@ export const API_ROUTES = {
   leads: '/api/leads',
   reviews: '/api/reviews',
   uploads: '/api/uploads',
-  booking: '/api/booking',
-  bookingSlots: '/api/booking/slots',
 } as const;
 
 /** Лимиты форм — валидатор на клиенте и на сервере берёт их отсюда. */
@@ -88,7 +85,6 @@ export const ANALYTICS_EVENTS = {
   phoneClick: 'phone_click',
   messengerClick: 'messenger_click',
   reviewSubmit: 'review_submit',
-  bookingSubmit: 'booking_submit',
 } as const;
 
 /** Брейкпоинты в px — для JS-логики (matchMedia). CSS берёт их из токенов. */

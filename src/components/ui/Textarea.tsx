@@ -1,18 +1,57 @@
 'use client';
 
-/**
- * Textarea — ЗАГЛУШКА.
- * Владелец: Агент 1 — ядро.
- * Контракт пропсов: TextareaProps в src/types/ui.ts — сигнатуру менять нельзя,
- * только через правку docs/CONTRACTS.md и согласование с другими агентами.
- */
+import { useId } from 'react';
 
 import type { TextareaProps } from '@/types';
+import { FormField, controlClasses, describedBy } from './FormField';
 
-export function Textarea(props: TextareaProps) {
+/** Многострочное поле. Владелец: Агент 1. */
+export function Textarea({
+  name,
+  label,
+  hint,
+  error,
+  required,
+  disabled,
+  placeholder,
+  value,
+  defaultValue,
+  rows = 4,
+  maxLength,
+  onChange,
+  onBlur,
+  className,
+  id,
+}: TextareaProps) {
+  const controlId = `${useId()}-${name}`;
+
   return (
-    <div id={props.id} className={props.className} data-stub="Textarea">
-      Textarea
-    </div>
+    <FormField
+      id={id}
+      controlId={controlId}
+      name={name}
+      label={label}
+      hint={hint}
+      error={error}
+      required={required}
+      className={className}
+    >
+      <textarea
+        id={controlId}
+        name={name}
+        rows={rows}
+        maxLength={maxLength}
+        placeholder={placeholder}
+        value={value}
+        defaultValue={defaultValue}
+        required={required}
+        disabled={disabled}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={describedBy(controlId, hint, error)}
+        onChange={(event) => onChange?.(event.target.value)}
+        onBlur={onBlur}
+        className={controlClasses(error, 'resize-y py-3 leading-normal')}
+      />
+    </FormField>
   );
 }

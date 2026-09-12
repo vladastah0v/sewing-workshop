@@ -1,16 +1,19 @@
-/**
- * Skeleton — ЗАГЛУШКА.
- * Владелец: Агент 1 — ядро.
- * Контракт пропсов: SkeletonProps в src/types/ui.ts — сигнатуру менять нельзя,
- * только через правку docs/CONTRACTS.md и согласование с другими агентами.
- */
-
 import type { SkeletonProps } from '@/types';
+import { cn } from '@/lib/utils';
 
-export function Skeleton(props: SkeletonProps) {
+const SHAPES = { text: 'rounded-sm h-4', rect: 'rounded-lg', circle: 'rounded-full' } as const;
+
+/** Скелетон загрузки (ТЗ п.6.2). Уважает prefers-reduced-motion через globals.css. */
+export function Skeleton({ variant = 'text', width, height, count = 1, className, id }: SkeletonProps) {
   return (
-    <div id={props.id} className={props.className} data-stub="Skeleton">
-      Skeleton
-    </div>
+    <span id={id} aria-hidden className={cn('flex flex-col gap-2', className)}>
+      {Array.from({ length: count }, (_, index) => (
+        <span
+          key={index}
+          style={{ width, height }}
+          className={cn('block animate-pulse bg-bg-muted', SHAPES[variant])}
+        />
+      ))}
+    </span>
   );
 }
