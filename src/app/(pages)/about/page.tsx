@@ -19,7 +19,7 @@ import { ADVANTAGES } from '@/content/advantages';
 import { CONTACTS } from '@/content/contacts';
 import { MASTERS } from '@/content/masters';
 import { APPROVED_REVIEWS } from '@/content/reviews';
-import { jsonLdScriptProps, localBusinessJsonLd } from '@/content/seo';
+import { jsonLdScriptProps, localBusinessJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'О мастерской: команда, опыт и оборудование',

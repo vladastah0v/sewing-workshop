@@ -5,7 +5,7 @@
  * Владелец: Агент 3. Контракт пропсов: ReviewCardProps в src/types/ui.ts.
  *
  * Микроразметку Review здесь не пишем: на странице отзывов она собирается одним
- * JSON-LD с AggregateRating (src/content/seo.ts). Дублировать её в разметке —
+ * JSON-LD с AggregateRating (src/lib/seo.ts). Дублировать её в разметке —
  * значит удвоить отзывы в глазах поисковика.
  */
 

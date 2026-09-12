@@ -9,6 +9,11 @@ import type { NavLink, PriceGroup, ServiceSlug } from '@/types';
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://example.ru';
 
+/**
+ * Торговое имя — только для <title>, шапки и подвала.
+ * В микроразметке Schema.org организацию называют через
+ * CONTACTS.organizationName, а оператора ПДн — через CONTACTS.legalEntity.
+ */
 export const SITE_NAME = 'Швейная мастерская';
 
 /** Человекочитаемые названия категорий услуг. */

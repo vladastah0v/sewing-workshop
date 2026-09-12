@@ -3,7 +3,7 @@
  *
  * Выводятся только approved: true — неодобренные лежат в том же массиве
  * и на страницу не попадают. Микроразметка Review + AggregateRating идёт одним
- * JSON-LD (см. src/content/seo.ts), в карточках её нет — иначе отзывы задвоятся.
+ * JSON-LD (см. src/lib/seo.ts), в карточках её нет — иначе отзывы задвоятся.
  */
 
 import type { Metadata } from 'next';
@@ -18,7 +18,7 @@ import { ReviewCard } from '@/components/features/ReviewCard';
 import { ReviewForm } from '@/components/forms/ReviewForm';
 import { CONTACTS } from '@/content/contacts';
 import { APPROVED_REVIEWS, getAverageRating } from '@/content/reviews';
-import { jsonLdScriptProps, reviewsPageJsonLd } from '@/content/seo';
+import { jsonLdScriptProps, reviewsPageJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Отзывы клиентов о швейной мастерской',

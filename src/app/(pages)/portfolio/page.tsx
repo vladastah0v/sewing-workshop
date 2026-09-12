@@ -13,7 +13,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 import { PortfolioGallery } from '@/components/features/PortfolioGallery';
 import { RequestForm } from '@/components/forms/RequestForm';
 import { PORTFOLIO } from '@/content/portfolio';
-import { itemListJsonLd, jsonLdScriptProps } from '@/content/seo';
+import { itemListJsonLd, jsonLdScriptProps } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Наши работы: фото до и после ремонта и пошива одежды',

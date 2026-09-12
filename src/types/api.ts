@@ -45,14 +45,20 @@ export type LeadSource =
   | 'contacts'
   | 'popup'
   | 'sticky-cta'
-  | 'calculator';
+  | 'calculator'
+  | 'about'
+  | 'process';
 
 export type PreferredContactTime = 'any' | 'morning' | 'afternoon' | 'evening';
 export type PreferredChannel = 'phone' | 'whatsapp' | 'telegram';
 
 export interface LeadRequest {
-  /** 2–80 символов. */
-  name: string;
+  /**
+   * 2–80 символов. Необязательно: вариант формы `inline` (hero, sticky)
+   * спрашивает только телефон. Подставлять имя-заглушку запрещено —
+   * владелец должен видеть, что клиент его не оставлял.
+   */
+  name?: string;
   /** Только цифры в формате E.164, РФ: +7XXXXXXXXXX. Маску снимает клиент. */
   phone: string;
   serviceType: ServiceSlug;

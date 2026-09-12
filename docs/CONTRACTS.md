@@ -67,7 +67,8 @@ project3.0/
 │   │   ├── validation.ts       ← АГЕНТ 4
 │   │   ├── api-client.ts       ← АГЕНТ 4
 │   │   ├── analytics.ts        ← АГЕНТ 4
-│   │   └── notify.ts           ← АГЕНТ 4
+│   │   ├── notify.ts           ← АГЕНТ 4
+│   │   └── seo.ts              ← АГЕНТ 1 (билдеры JSON-LD, общие для всех)
 │   ├── content/                ← АГЕНТ 3 (данные-заглушки → CMS)
 │   └── components/
 │       ├── ui/                 ← АГЕНТ 1  (примитивы)
@@ -245,7 +246,7 @@ project3.0/
 | `Checkbox` | `CheckboxProps` | чекбокс, `label` принимает ReactNode (ссылка на политику) |
 | `Card` | `CardProps` | контейнер-карточка |
 | `Badge` | `BadgeProps` | статусный бейдж |
-| `Rating` | `RatingProps` | звёзды; с `onChange` — интерактивные |
+| `Rating` | `RatingProps` | звёзды; с `onChange` — интерактивные, с `label`/`required`/`error` — полноценное поле формы |
 | `Spinner` | `SpinnerProps` | индикатор загрузки (ТЗ п.6.2) |
 | `Skeleton` | `SkeletonProps` | скелетон (ТЗ п.6.2) |
 | `Modal` | `ModalProps` | модалка с ловушкой фокуса |
@@ -299,10 +300,10 @@ project3.0/
 
 | Компонент | Тип пропсов | Примечание |
 |---|---|---|
-| `RequestForm` | `RequestFormProps` | 3 варианта: `full` / `compact` / `inline` |
+| `RequestForm` | `RequestFormProps` | 3 варианта: `full` / `compact` / `inline`; `defaultMessage` предзаполняет описание задачи |
 | `ReviewForm` | `ReviewFormProps` | отзыв уходит на модерацию |
 | `CalculatorForm` | `CalculatorFormProps` | расчёт стоимости (ТЗ п.5.5) |
-| `ConsentCheckbox` | `ConsentCheckboxProps` | согласие 152-ФЗ, обязателен во всех формах |
+| `ConsentCheckbox` | `ConsentCheckboxProps` | согласие 152-ФЗ, обязателен во всех формах; `disabled` на время отправки |
 | `PhoneInput` | `PhoneInputProps` | маска `+7 (999) 999-99-99` |
 | `FileUpload` | `FileUploadProps` | до 5 фото по 10 МБ |
 
@@ -339,7 +340,7 @@ type ApiResponse<T> =
 
 | Поле | Тип | Обяз. | Ограничения |
 |---|---|---|---|
-| `name` | string | да | 2–80 символов |
+| `name` | string | **нет** | 2–80 символов. Вариант формы `inline` спрашивает только телефон; имя-заглушку подставлять запрещено |
 | `phone` | string | да | E.164 `+7XXXXXXXXXX`, маску снимает клиент |
 | `serviceType` | `ServiceSlug` | да | `repair` / `tailoring` / `custom-fit` / `restoration` / `other` |
 | `message` | string | нет | до 1000 символов |
@@ -354,7 +355,7 @@ type ApiResponse<T> =
 Ответ 200: `{ ok: true, data: { leadId: string, message: string } }`.
 
 `LeadSource`: `hero`, `services-section`, `service-page`, `price-page`, `portfolio`,
-`footer`, `contacts`, `popup`, `sticky-cta`, `calculator`.
+`footer`, `contacts`, `popup`, `sticky-cta`, `calculator`, `about`, `process`.
 
 ### 6.3 Остальные роуты
 
@@ -456,6 +457,27 @@ idle → (submit) → validating → submitting → success
 - [ ] Яндекс.Метрика и цели настроены
 - [ ] `rg 'data-stub' src/` пусто
 - [ ] `npm run build` и `npm run typecheck` без ошибок
+
+---
+
+## 10.1 Блокеры перед публикацией
+
+Не дефекты кода — их нельзя закрыть без данных заказчика, но и выкатывать с ними нельзя.
+
+1. **Портфолио: изображения не соответствуют alt.** Файлы в `/public/images/portfolio`
+   и `/public/images/services` — абстрактные текстуры ткани, а alt описывает конкретные
+   изделия. Нарушает WCAG (alt обязан описывать изображение) и вводит клиента в заблуждение:
+   портфолио из образцов ткани вместо выполненных работ. Нужны реальные снимки
+   и переписанные под них alt.
+2. **Нет фото для hero главной.** Проп `image` у `HeroSection` временно убран, чтобы не
+   отдавать 404 на LCP-изображении. Вернуть, когда появится `/images/ui/hero-workshop.jpg`.
+3. **Реквизиты оператора ПДн.** `CONTACTS.legalEntity` не заполнен, страница `/privacy`
+   показывает пометку «реквизиты уточняются». Публиковать политику в таком виде нельзя.
+4. **Коэффициенты калькулятора** — временные (сложность 1 / 1,3 / 1,8, срочность 1,5,
+   ширина вилки ×1,6). Заменить на реальное ценообразование.
+5. **Хранилище загрузок и rate-limit** живут в памяти инстанса: `os.tmpdir()` с TTL 6 часов
+   и счётчик по IP. При деплое в несколько реплик или serverless нужны S3 и Redis;
+   интерфейсы `UploadResponseData` и `checkRateLimit()` под замену рассчитаны.
 
 ---
 

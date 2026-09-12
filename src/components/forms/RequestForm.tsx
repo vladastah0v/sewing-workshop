@@ -40,13 +40,6 @@ import { FileUpload } from './FileUpload';
 import { PhoneInput } from './PhoneInput';
 import { CHANNEL_OPTIONS, SERVICE_OPTIONS, TIME_OPTIONS, focusFirstError } from './formUtils';
 
-/**
- * В варианте inline поля имени нет (телефон + согласие в строку),
- * а LeadRequest.name обязателен. Подставляем честную заглушку;
- * запрос на необязательный name записан в docs/requests-forms.md.
- */
-const NO_NAME_PLACEHOLDER = 'Клиент с сайта';
-
 const SPAM_MESSAGE = 'Не удалось отправить заявку';
 
 interface FormValues {
@@ -69,6 +62,7 @@ export function RequestForm({
   title,
   description,
   submitLabel = 'Отправить заявку',
+  defaultMessage,
   onSuccess,
   onError,
   className,
@@ -82,7 +76,7 @@ export function RequestForm({
     name: '',
     phone: '',
     serviceType: defaultServiceType ?? '',
-    message: '',
+    message: defaultMessage ?? '',
     preferredTime: '',
     preferredChannel: '',
     consent: false,
@@ -120,7 +114,9 @@ export function RequestForm({
 
   function buildDraft(): Partial<LeadRequest> {
     return {
-      name: isInline ? NO_NAME_PLACEHOLDER : values.name.trim(),
+      // В варианте inline поля имени нет — не отправляем его вовсе.
+      // Владелец увидит в уведомлении «не указано», а не выдуманное имя.
+      ...(isInline || !values.name.trim() ? {} : { name: values.name.trim() }),
       phone: toE164(values.phone) ?? values.phone.trim(),
       serviceType: values.serviceType as ServiceSlug,
       ...(values.message.trim() ? { message: values.message.trim() } : {}),
@@ -330,6 +326,7 @@ export function RequestForm({
 
       <ConsentCheckbox
         checked={values.consent}
+        disabled={submitting}
         error={errors.consent}
         onChange={(checked) => {
           set('consent', checked);

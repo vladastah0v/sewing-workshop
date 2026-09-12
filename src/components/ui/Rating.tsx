@@ -1,5 +1,7 @@
 'use client';
 
+import { useId } from 'react';
+
 import type { RatingProps } from '@/types';
 import { cn } from '@/lib/utils';
 import { Icon } from './Icon';
@@ -8,9 +10,20 @@ const SIZES = { sm: 16, md: 20, lg: 24 } as const;
 const STARS = [1, 2, 3, 4, 5] as const;
 
 /** Звёзды. Без onChange — только вывод, с onChange — интерактивный выбор. */
-export function Rating({ value, onChange, size = 'md', showValue, className, id }: RatingProps) {
+export function Rating({
+  value,
+  onChange,
+  size = 'md',
+  showValue,
+  label,
+  required,
+  error,
+  className,
+  id,
+}: RatingProps) {
   const px = SIZES[size];
   const rounded = Math.round(value);
+  const groupId = `${useId()}-rating`;
 
   if (!onChange) {
     return (
@@ -32,8 +45,30 @@ export function Rating({ value, onChange, size = 'md', showValue, className, id 
   }
 
   return (
-    <div id={id} role="radiogroup" aria-label="Оценка" className={cn('inline-flex gap-1', className)}>
-      {STARS.map((star) => (
+    <div id={id} className={cn('flex flex-col gap-2', className)}>
+      {label && (
+        <span id={`${groupId}-label`} className="text-sm font-medium text-text">
+          {label}
+          {required && (
+            <>
+              <span aria-hidden className="ml-1 text-error">
+                *
+              </span>
+              <span className="visually-hidden">, обязательное поле</span>
+            </>
+          )}
+        </span>
+      )}
+
+      <div
+        role="radiogroup"
+        aria-label={label ? undefined : 'Оценка'}
+        aria-labelledby={label ? `${groupId}-label` : undefined}
+        aria-describedby={error ? `${groupId}-error` : undefined}
+        aria-invalid={error ? true : undefined}
+        className="inline-flex gap-1"
+      >
+        {STARS.map((star) => (
         <button
           key={star}
           type="button"
@@ -47,9 +82,16 @@ export function Rating({ value, onChange, size = 'md', showValue, className, id 
             star <= rounded ? 'text-accent' : 'text-neutral-300',
           )}
         >
-          <Icon name="star" size={px} />
-        </button>
-      ))}
+            <Icon name="star" size={px} />
+          </button>
+        ))}
+      </div>
+
+      {error && (
+        <p id={`${groupId}-error`} role="alert" className="text-sm text-error">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

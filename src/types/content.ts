@@ -134,6 +134,20 @@ export interface WorkingHours {
   closesAt: string | null;
 }
 
+/**
+ * Реквизиты оператора персональных данных (152-ФЗ).
+ * Нужны на странице политики: там называют юрлицо, а не торговое имя.
+ */
+export interface LegalEntity {
+  /** Полное наименование: «ИП Иванов Иван Иванович» или «ООО "Ателье"». */
+  name: string;
+  inn: string;
+  /** ОГРН или ОГРНИП. */
+  ogrn: string;
+  /** Юридический адрес, если отличается от адреса мастерской. */
+  legalAddress?: string;
+}
+
 export interface ContactInfoData {
   organizationName: string;
   phone: string;                // E.164: +79991234567
@@ -148,6 +162,8 @@ export interface ContactInfoData {
   messengers: MessengerLink[];
   /** Часовой пояс IANA — нужен для бейджа «Открыто/Закрыто». */
   timeZone: string;             // «Europe/Moscow»
+  /** Реквизиты для политики конфиденциальности. Пока не заданы — undefined. */
+  legalEntity?: LegalEntity;
 }
 
 export interface MessengerLink {
@@ -179,6 +195,7 @@ export interface BreadcrumbItem {
 export type IconName =
   | 'scissors' | 'needle' | 'ruler' | 'hanger' | 'zipper' | 'shirt' | 'dress'
   | 'clock' | 'shield' | 'star' | 'quote' | 'sparkle'
+  | 'users' | 'award' | 'truck' | 'wallet' | 'pencil'
   | 'phone' | 'mail' | 'map-pin' | 'whatsapp' | 'telegram' | 'viber'
   | 'chevron-left' | 'chevron-right' | 'chevron-down' | 'arrow-right'
   | 'close' | 'menu' | 'check' | 'alert' | 'info' | 'upload' | 'image';

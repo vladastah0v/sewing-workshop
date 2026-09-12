@@ -15,6 +15,7 @@ export function ConsentCheckbox({
   name = 'consent',
   checked,
   error,
+  disabled,
   onChange,
   policyHref = '/privacy',
   className,
@@ -27,6 +28,7 @@ export function ConsentCheckbox({
       name={name}
       checked={checked ?? false}
       required
+      disabled={disabled}
       error={error}
       onChange={onChange}
       label={

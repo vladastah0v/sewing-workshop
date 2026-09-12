@@ -25,7 +25,7 @@ import { PORTFOLIO } from '@/content/portfolio';
 import { PRICES } from '@/content/prices';
 import { PROCESS_STEPS } from '@/content/process';
 import { SERVICES, getServiceBySlug } from '@/content/services';
-import { jsonLdScriptProps, serviceJsonLd } from '@/content/seo';
+import { jsonLdScriptProps, serviceJsonLd } from '@/lib/seo';
 import { formatLeadTime, formatPrice } from '@/lib/utils';
 
 export const dynamicParams = false;

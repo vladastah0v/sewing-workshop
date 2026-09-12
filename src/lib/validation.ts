@@ -72,11 +72,17 @@ export function isSpam(payload: { hpField?: string; renderedAt?: number }): bool
   return elapsed < FORM_LIMITS.minFillMs || elapsed > FORM_LIMITS.maxFillMs;
 }
 
-/** Полная проверка заявки. Используется формой и роутом /api/leads. */
+/**
+ * Полная проверка заявки. Используется формой и роутом /api/leads.
+ * Имя необязательно: форма в варианте `inline` спрашивает только телефон.
+ * Если имя пришло — проверяем длину.
+ */
 export function validateLead(payload: Partial<LeadRequest>): FieldErrors {
   const errors: FieldErrors = {};
-  const name = validateName(payload.name);
-  if (name) errors.name = name;
+  if (typeof payload.name === 'string' && payload.name.trim() !== '') {
+    const name = validateName(payload.name);
+    if (name) errors.name = name;
+  }
   const phone = validatePhone(payload.phone);
   if (phone) errors.phone = phone;
   const service = validateServiceType(payload.serviceType);

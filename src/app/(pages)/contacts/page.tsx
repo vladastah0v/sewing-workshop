@@ -13,7 +13,7 @@ import { ContactInfo } from '@/components/features/ContactInfo';
 import { MapEmbed } from '@/components/features/MapEmbed';
 import { RequestForm } from '@/components/forms/RequestForm';
 import { CONTACTS } from '@/content/contacts';
-import { jsonLdScriptProps, localBusinessJsonLd } from '@/content/seo';
+import { jsonLdScriptProps, localBusinessJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Контакты: адрес, телефон и режим работы мастерской',

@@ -66,6 +66,24 @@ export function CalculatorForm({
 
   // Колбэк держим в ref: родитель почти всегда передаёт стрелку,
   // в зависимостях эффекта она давала бы лишние вызовы на каждый рендер.
+  // Итог расчёта уходит в заявку текстом: менеджер сразу видит,
+  // что человек выбрал, и не звонит переспрашивать (requests-forms.md, п.2).
+  const estimateSummary = useMemo(() => {
+    if (!service || !estimate) return undefined;
+
+    const count = Math.min(Math.max(Number.parseInt(quantity, 10) || 1, 1), MAX_QUANTITY);
+    const complexityLabel = COMPLEXITY.find((item) => item.value === complexity)?.label ?? '';
+    const urgencyLabel = URGENCY.find((item) => item.value === urgency)?.label ?? '';
+
+    return [
+      `Расчёт с сайта: ${service.title}`,
+      `Количество: ${count}`,
+      `Сложность: ${complexityLabel}`,
+      `Срочность: ${urgencyLabel}`,
+      `Ориентир по цене: ${formatPrice(estimate.min)} – ${formatPrice(estimate.max)}`,
+    ].join('\n');
+  }, [service, estimate, quantity, complexity, urgency]);
+
   const onEstimateRef = useRef(onEstimate);
   useEffect(() => {
     onEstimateRef.current = onEstimate;
@@ -157,6 +175,7 @@ export function CalculatorForm({
         variant="compact"
         source={source}
         defaultServiceType={service?.category}
+        defaultMessage={estimateSummary}
         title="Узнать точную цену"
         description="Оставьте телефон — перезвоним, уточним детали и назовём стоимость."
         submitLabel="Получить расчёт"

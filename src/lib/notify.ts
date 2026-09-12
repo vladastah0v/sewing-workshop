@@ -36,6 +36,8 @@ const SOURCE_LABELS: Record<LeadSource, string> = {
   popup: 'всплывающее окно',
   'sticky-cta': 'липкая кнопка',
   calculator: 'калькулятор',
+  about: 'страница «О мастерской»',
+  process: 'страница «Как мы работаем»',
 };
 
 const TIME_LABELS: Record<PreferredContactTime, string> = {
@@ -116,7 +118,9 @@ export async function notifyNewLead(
   const rows = [
     '<b>Новая заявка с сайта</b>',
     '',
-    line('Имя', lead.name),
+    // Имя необязательно: форма в варианте inline спрашивает только телефон.
+    // Строку не подделываем — владелец должен видеть, что имени нет.
+    line('Имя', lead.name?.trim() || 'не указано'),
     line('Телефон', formatPhone(lead.phone)),
     line('Услуга', SERVICE_LABELS[lead.serviceType] ?? lead.serviceType),
   ];

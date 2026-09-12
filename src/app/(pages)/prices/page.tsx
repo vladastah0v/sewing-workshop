@@ -15,7 +15,7 @@ import { RequestForm } from '@/components/forms/RequestForm';
 import { FAQ } from '@/content/faq';
 import { PRICES } from '@/content/prices';
 import { SERVICES } from '@/content/services';
-import { faqPageJsonLd, jsonLdScriptProps } from '@/content/seo';
+import { faqPageJsonLd, jsonLdScriptProps } from '@/lib/seo';
 import { Accordion } from '@/components/ui/Accordion';
 
 export const metadata: Metadata = {

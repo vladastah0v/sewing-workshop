@@ -63,9 +63,22 @@ export default function PrivacyPage() {
                 «О персональных данных».
               </p>
               <p>
-                Оператор персональных данных — {CONTACTS.organizationName}
-                <span className="text-text-subtle"> (реквизиты уточняются)</span>, адрес:{' '}
-                {CONTACTS.city}, {CONTACTS.addressLine}.
+                Оператор персональных данных —{' '}
+                {CONTACTS.legalEntity ? (
+                  <>
+                    {CONTACTS.legalEntity.name}, ИНН {CONTACTS.legalEntity.inn}, ОГРН{' '}
+                    {CONTACTS.legalEntity.ogrn}
+                  </>
+                ) : (
+                  <>
+                    {CONTACTS.organizationName}
+                    <span className="text-text-subtle"> (реквизиты уточняются)</span>
+                  </>
+                )}
+                , адрес:{' '}
+                {CONTACTS.legalEntity?.legalAddress ??
+                  `${CONTACTS.city}, ${CONTACTS.addressLine}`}
+                .
               </p>
               <p>
                 Отправляя форму на сайте, вы подтверждаете, что ознакомились с этой политикой

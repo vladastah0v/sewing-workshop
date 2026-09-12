@@ -177,28 +177,18 @@ export function ReviewForm({
       {title && <h2 className="font-heading text-2xl">{title}</h2>}
 
       {/* Rating — не поле формы, name у него нет: помечаем data-field для фокуса */}
-      <div className="flex flex-col gap-2">
-        <span className="text-sm font-medium text-text">
-          Оценка
-          <span aria-hidden className="ml-1 text-error">
-            *
-          </span>
-        </span>
-        <div data-field="rating" tabIndex={-1} className="w-fit">
-          <Rating
-            value={values.rating}
-            size="lg"
-            onChange={(rating) => {
-              set('rating', rating);
-              setFieldError('rating', null);
-            }}
-          />
-        </div>
-        {errors.rating && (
-          <p role="alert" className="text-sm text-error">
-            {errors.rating}
-          </p>
-        )}
+      <div data-field="rating" tabIndex={-1} className="w-fit">
+        <Rating
+          value={values.rating}
+          size="lg"
+          label="Оценка"
+          required
+          error={errors.rating}
+          onChange={(rating) => {
+            set('rating', rating);
+            setFieldError('rating', null);
+          }}
+        />
       </div>
 
       <div className="grid gap-5 md:grid-cols-2">
@@ -261,6 +251,7 @@ export function ReviewForm({
 
       <ConsentCheckbox
         checked={values.consent}
+        disabled={submitting}
         error={errors.consent}
         onChange={(checked) => {
           set('consent', checked);

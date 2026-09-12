@@ -14,6 +14,15 @@ export const CONTACTS: ContactInfoData = {
   postalCode: '101000',
   coordinates: [55.75396, 37.620393],
   timeZone: 'Europe/Moscow',
+  // Реквизиты оператора ПДн (152-ФЗ). Пока не переданы заказчиком —
+  // страница /privacy сама покажет пометку «реквизиты уточняются».
+  // Заполнить по образцу и раскомментировать:
+  // legalEntity: {
+  //   name: 'ИП Фамилия Имя Отчество',
+  //   inn: '000000000000',
+  //   ogrn: '000000000000000',
+  //   legalAddress: 'Москва, ул. Примерная, 1',
+  // },
   workingHours: [
     { day: 1, opensAt: '10:00', closesAt: '20:00' },
     { day: 2, opensAt: '10:00', closesAt: '20:00' },

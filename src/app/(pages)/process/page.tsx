@@ -17,7 +17,7 @@ import { ProcessSteps } from '@/components/features/ProcessSteps';
 import { RequestForm } from '@/components/forms/RequestForm';
 import { FAQ } from '@/content/faq';
 import { PROCESS_STEPS } from '@/content/process';
-import { faqPageJsonLd, jsonLdScriptProps } from '@/content/seo';
+import { faqPageJsonLd, jsonLdScriptProps } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Как мы работаем: от заявки до выдачи с гарантией',

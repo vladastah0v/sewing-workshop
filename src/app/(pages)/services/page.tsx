@@ -14,7 +14,7 @@ import { ServiceGrid } from '@/components/features/ServiceGrid';
 import { RequestForm } from '@/components/forms/RequestForm';
 import { PROCESS_STEPS } from '@/content/process';
 import { SERVICES } from '@/content/services';
-import { itemListJsonLd, jsonLdScriptProps } from '@/content/seo';
+import { itemListJsonLd, jsonLdScriptProps } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Услуги мастерской: ремонт, пошив и реставрация одежды',

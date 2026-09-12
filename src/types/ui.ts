@@ -138,6 +138,12 @@ export interface BadgeProps extends BaseProps {
 export interface RatingProps extends BaseProps {
   /** 0..5, допускается дробное для среднего балла. */
   value: number;
+  /** Подпись над звёздами. Только для интерактивного режима. */
+  label?: string;
+  /** Отмечает поле обязательным (звёздочка + подпись для скринридера). */
+  required?: boolean;
+  /** Текст ошибки; связывается со звёздами через aria-describedby. */
+  error?: string;
   /** Если задан — компонент интерактивный (форма отзыва). */
   onChange?: (value: 1 | 2 | 3 | 4 | 5) => void;
   size?: 'sm' | 'md' | 'lg';
@@ -277,6 +283,8 @@ export interface RequestFormProps extends BaseProps {
   title?: string;
   description?: string;
   submitLabel?: string; // default: Отправить заявку
+  /** Предзаполняет поле «Опишите задачу» — например, итогом калькулятора. */
+  defaultMessage?: string;
   /** Вызывается после ответа 200. Форма сама показывает экран успеха. */
   onSuccess?: (data: LeadResponseData) => void;
   onError?: (error: ApiError) => void;
@@ -301,6 +309,8 @@ export interface ConsentCheckboxProps extends BaseProps {
   name?: string; // default: 'consent'
   checked?: boolean;
   error?: string;
+  /** Блокируется на время отправки — как и остальные поля (контракт §6.5). */
+  disabled?: boolean;
   onChange?: (checked: boolean) => void;
   policyHref?: string; // default: '/privacy'
 }
