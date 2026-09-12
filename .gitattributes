@@ -1,0 +1,12 @@
+# Единые переводы строк в репозитории: LF. Иначе на Windows весь проект
+# уходит в CRLF и агенты получают диффы на файлы, которых не касались.
+* text=auto eol=lf
+
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.ico  binary
+*.woff  binary
+*.woff2 binary
