@@ -1,17 +1,18 @@
 import Link from 'next/link';
 
 import type { FooterProps } from '@/types';
-import { cn, formatPhone } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { SITE_NAME } from '@/lib/constants';
 import { Container } from '@/components/ui/Container';
 import { Icon } from '@/components/ui/Icon';
+import { MessengerBadges } from '@/components/ui/MessengerBadges';
 
 const WEEKDAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 
 /** Подвал: навигация, контакты, режим работы, политика. */
 export function Footer({ nav, contacts, className, id }: FooterProps) {
   return (
-    <footer id={id} className={cn('mt-16 bg-bg-inverse text-text-inverse', className)}>
+    <footer id={id} className={cn('mt-16 bg-bg-inverse bg-thread text-text-inverse', className)}>
       <Container className="grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-4 lg:py-16">
         <div className="flex flex-col gap-3">
           <p className="font-heading text-xl">{SITE_NAME}</p>
@@ -29,9 +30,12 @@ export function Footer({ nav, contacts, className, id }: FooterProps) {
         </nav>
 
         <address className="flex flex-col gap-3 not-italic">
-          <a href={`tel:${contacts.phone}`} className="flex items-center gap-2 font-semibold hover:text-brand-300">
+          <a
+            href={`tel:${contacts.phone}`}
+            className="flex items-center gap-2 text-lg font-bold hover:text-brand-300"
+          >
             <Icon name="phone" size={20} />
-            {formatPhone(contacts.phone)}
+            {contacts.phoneDisplay}
           </a>
           <a href={`mailto:${contacts.email}`} className="flex items-center gap-2 text-neutral-200 hover:text-neutral-0">
             <Icon name="mail" size={20} />
@@ -43,21 +47,7 @@ export function Footer({ nav, contacts, className, id }: FooterProps) {
               {contacts.city}, {contacts.addressLine}
             </span>
           </p>
-          <ul className="flex gap-2">
-            {contacts.messengers.map((messenger) => (
-              <li key={messenger.kind}>
-                <a
-                  href={messenger.href}
-                  aria-label={messenger.label}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="grid size-11 place-items-center rounded-full bg-neutral-800 hover:bg-neutral-700"
-                >
-                  <Icon name={messenger.kind === 'telegram' ? 'telegram' : 'whatsapp'} size={22} />
-                </a>
-              </li>
-            ))}
-          </ul>
+          <MessengerBadges messengers={contacts.messengers} className="mt-1" />
         </address>
 
         <div className="flex flex-col gap-2">

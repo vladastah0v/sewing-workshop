@@ -11,7 +11,7 @@ import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ProcessSteps } from '@/components/features/ProcessSteps';
 import { ServiceGrid } from '@/components/features/ServiceGrid';
-import { RequestForm } from '@/components/forms/RequestForm';
+import { CtaSection } from '@/components/sections/CtaSection';
 import { PROCESS_STEPS } from '@/content/process';
 import { SERVICES } from '@/content/services';
 import { itemListJsonLd, jsonLdScriptProps } from '@/lib/seo';
@@ -52,22 +52,16 @@ export default function ServicesPage() {
           <SectionHeading
             title="Как проходит заказ"
             subtitle="Одинаково для любой услуги: от заявки до выдачи с гарантией."
-            action={{ label: 'Подробнее о процессе', href: '/process' }}
           />
           <ProcessSteps steps={PROCESS_STEPS} />
         </Container>
       </Section>
 
-      <Section id="request">
-        <Container width="narrow">
-          <SectionHeading
-            align="center"
-            title="Не нашли свою задачу?"
-            subtitle="Опишите её в заявке — мастер посмотрит и скажет, беремся ли и сколько это будет стоить."
-          />
-          <RequestForm variant="full" source="services-section" />
-        </Container>
-      </Section>
+      <CtaSection
+        id="contact"
+        title="Не нашли свою задачу?"
+        description="Позвоните и опишите её — мастер скажет, беремся ли и сколько это будет стоить."
+      />
 
       <script {...jsonLdScriptProps(jsonLd)} />
     </>

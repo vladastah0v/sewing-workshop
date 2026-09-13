@@ -11,7 +11,7 @@ import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { PriceTable } from '@/components/features/PriceTable';
 import { CalculatorForm } from '@/components/forms/CalculatorForm';
-import { RequestForm } from '@/components/forms/RequestForm';
+import { CtaSection } from '@/components/sections/CtaSection';
 import { FAQ } from '@/content/faq';
 import { PRICES } from '@/content/prices';
 import { SERVICES } from '@/content/services';
@@ -72,16 +72,11 @@ export default function PricesPage() {
         </Container>
       </Section>
 
-      <Section id="request" background="subtle">
-        <Container width="narrow">
-          <SectionHeading
-            align="center"
-            title="Нужна точная цена?"
-            subtitle="Опишите изделие и приложите фото — ответим с оценкой в течение рабочего дня."
-          />
-          <RequestForm variant="full" source="price-page" />
-        </Container>
-      </Section>
+      <CtaSection
+        id="contact"
+        title="Нужна точная цена?"
+        description="Точную стоимость мастер называет после осмотра изделия. Позвоните — подскажем по телефону."
+      />
 
       <script {...jsonLdScriptProps(faqPageJsonLd(PRICE_FAQ))} />
     </>

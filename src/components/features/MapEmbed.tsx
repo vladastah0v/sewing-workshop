@@ -14,18 +14,24 @@ import { Icon } from '@/components/ui/Icon';
 
 export function MapEmbed({
   coordinates,
+  query,
   zoom = 16,
   markerTitle,
   height = '400px',
   className,
   id,
 }: MapEmbedProps) {
-  const [latitude, longitude] = coordinates;
-  // Яндекс принимает координаты в порядке «долгота,широта».
-  const point = `${longitude},${latitude}`;
+  // Координат может не быть: тогда виджет ищет точку по адресу строкой.
+  // Это точнее, чем прикинутые «на глаз» широта и долгота.
+  const point = coordinates ? `${coordinates[1]},${coordinates[0]}` : null;
 
-  const widgetSrc = `https://yandex.ru/map-widget/v1/?ll=${encodeURIComponent(point)}&z=${zoom}&pt=${encodeURIComponent(`${point},pm2rdm`)}`;
-  const externalHref = `https://yandex.ru/maps/?ll=${encodeURIComponent(point)}&z=${zoom}&pt=${encodeURIComponent(point)}`;
+  const widgetSrc = point
+    ? `https://yandex.ru/map-widget/v1/?ll=${encodeURIComponent(point)}&z=${zoom}&pt=${encodeURIComponent(`${point},pm2rdm`)}`
+    : `https://yandex.ru/map-widget/v1/?text=${encodeURIComponent(query ?? '')}&z=${zoom}`;
+
+  const externalHref = point
+    ? `https://yandex.ru/maps/?ll=${encodeURIComponent(point)}&z=${zoom}&pt=${encodeURIComponent(point)}`
+    : `https://yandex.ru/maps/?text=${encodeURIComponent(query ?? '')}`;
 
   const title = markerTitle ? `Карта: ${markerTitle}` : 'Карта проезда';
 

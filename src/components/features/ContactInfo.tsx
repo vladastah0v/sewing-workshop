@@ -10,6 +10,7 @@
 import type { ContactInfoData, ContactInfoProps, WeekdayIso } from '@/types';
 import { cn } from '@/lib/utils';
 import { Icon } from '@/components/ui/Icon';
+import { MessengerBadges } from '@/components/ui/MessengerBadges';
 import { WorkStatusBadge } from './WorkStatusBadge';
 
 const WEEKDAY_SHORT: Record<WeekdayIso, string> = {
@@ -21,14 +22,6 @@ const WEEKDAY_SHORT: Record<WeekdayIso, string> = {
   6: 'Сб',
   7: 'Вс',
 };
-
-const MESSENGER_ICON = {
-  whatsapp: 'whatsapp',
-  telegram: 'telegram',
-  viber: 'viber',
-  vk: 'chevron-right',
-  max: 'chevron-right',
-} as const;
 
 /**
  * Сворачиваем одинаковые подряд идущие дни: «Пн–Пт 10:00–20:00».
@@ -138,21 +131,17 @@ export function ContactInfo({
           <Icon name="telegram" size={22} className={iconClass} />
           <div className="flex flex-col gap-2">
             <span className="text-sm text-text-muted">Мессенджеры</span>
-            <ul className="flex flex-wrap gap-2">
-              {contacts.messengers.map((messenger) => (
-                <li key={messenger.kind}>
-                  <a
-                    href={messenger.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex h-11 items-center gap-2 rounded-full border border-border px-4 font-medium transition-colors duration-[var(--duration-fast)] ease-standard hover:bg-bg-subtle"
-                  >
-                    <Icon name={MESSENGER_ICON[messenger.kind]} size={20} />
-                    {messenger.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <MessengerBadges messengers={contacts.messengers} />
+          </div>
+        </div>
+      )}
+
+      {contacts.directions && (
+        <div className={rowClass}>
+          <Icon name="map-pin" size={22} className={iconClass} />
+          <div className="flex flex-col gap-1">
+            <span className="text-sm text-text-muted">Как добраться</span>
+            <p className="text-text-muted">{contacts.directions}</p>
           </div>
         </div>
       )}

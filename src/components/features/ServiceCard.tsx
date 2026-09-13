@@ -112,7 +112,7 @@ export function ServiceCard({
                   Заказать
                 </Button>
               ) : (
-                <Button size="sm" href={`${href}#request`}>
+                <Button size="sm" href={`${href}#contact`}>
                   Заказать
                 </Button>
               )}

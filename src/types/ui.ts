@@ -259,9 +259,9 @@ export interface StickyCtaProps extends BaseProps {
   showAfterScroll?: number;
 }
 
-export interface MessengerFabProps extends BaseProps {
-  contacts: ContactInfoData;
-  position?: 'left' | 'right'; // default: 'right'
+export interface MessengerBadgesProps extends BaseProps {
+  messengers: ContactInfoData['messengers'];
+  size?: 'sm' | 'md'; // default: 'md'
 }
 
 /* ------------------------------------------------------------------ */
@@ -301,7 +301,6 @@ export interface ReviewFormProps extends BaseProps {
 
 export interface CalculatorFormProps extends BaseProps {
   services: Service[];
-  source?: LeadSource; // default: 'calculator'
   onEstimate?: (estimate: { min: number; max: number }) => void;
 }
 
@@ -422,7 +421,10 @@ export interface WorkStatusBadgeProps extends BaseProps {
 }
 
 export interface MapEmbedProps extends BaseProps {
-  coordinates: [number, number];
+  /** Координаты точки. Если не заданы — карта ищется по `query`. */
+  coordinates?: [number, number];
+  /** Адрес строкой: «Уфа, улица Ферина, 13/1». Используется без координат. */
+  query?: string;
   zoom?: number; // default: 16
   markerTitle?: string;
   height?: string; // default: '400px'
@@ -492,8 +494,4 @@ export interface MapSectionProps extends BaseProps {
 export interface CtaSectionProps extends BaseProps {
   title: string;
   description?: string;
-  source: LeadSource;
-  /** Встроить форму или показать кнопку. default: 'form' */
-  mode?: 'form' | 'button';
-  cta?: { label: string; href?: string };
 }

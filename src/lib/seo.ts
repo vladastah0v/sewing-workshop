@@ -41,8 +41,6 @@ export function jsonLdScriptProps(data: unknown) {
 
 /** Организация: основа для LocalBusiness и ссылок provider/publisher. */
 export function localBusinessJsonLd(contacts: ContactInfoData) {
-  const [latitude, longitude] = contacts.coordinates;
-
   return {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
@@ -65,11 +63,17 @@ export function localBusinessJsonLd(contacts: ContactInfoData) {
       ...(contacts.postalCode ? { postalCode: contacts.postalCode } : {}),
       addressCountry: 'RU',
     },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude,
-      longitude,
-    },
+    // geo отдаём только с выверенными координатами: ошибочный пин в выдаче
+    // хуже отсутствующего — Яндекс и Google уводят клиента не туда.
+    ...(contacts.coordinates
+      ? {
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: contacts.coordinates[0],
+            longitude: contacts.coordinates[1],
+          },
+        }
+      : {}),
     openingHoursSpecification: contacts.workingHours
       .filter((day) => day.opensAt !== null && day.closesAt !== null)
       .map((day) => ({

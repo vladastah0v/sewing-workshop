@@ -23,7 +23,7 @@ export function HeroSection({
   id,
 }: HeroSectionProps) {
   return (
-    <Section id={id} background="subtle" className={className}>
+    <Section id={id} background="subtle" className={cn('hero-weave', className)}>
       <Container className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
         <div className="flex flex-col gap-6">
           <h1 className="font-heading text-4xl lg:text-5xl">{title}</h1>

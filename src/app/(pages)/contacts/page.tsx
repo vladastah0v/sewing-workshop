@@ -11,7 +11,7 @@ import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ContactInfo } from '@/components/features/ContactInfo';
 import { MapEmbed } from '@/components/features/MapEmbed';
-import { RequestForm } from '@/components/forms/RequestForm';
+import { CtaSection } from '@/components/sections/CtaSection';
 import { CONTACTS } from '@/content/contacts';
 import { jsonLdScriptProps, localBusinessJsonLd } from '@/lib/seo';
 
@@ -34,7 +34,7 @@ export default function ContactsPage() {
             level={1}
             eyebrow="Контакты"
             title="Как нас найти"
-            subtitle="Приходите без записи или оставьте заявку — перезвоним и предложим удобное время."
+            subtitle="Приходите без записи или позвоните — подскажем по телефону."
           />
 
           <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
@@ -43,31 +43,26 @@ export default function ContactsPage() {
             <div className="flex flex-col gap-4">
               <MapEmbed
                 coordinates={CONTACTS.coordinates}
+                query={CONTACTS.mapQuery ?? `${CONTACTS.city}, ${CONTACTS.addressLine}`}
                 markerTitle={CONTACTS.organizationName}
                 height="420px"
               />
-              <div className="flex flex-col gap-2 rounded-xl bg-accent-subtle px-5 py-4">
-                <p className="font-semibold">Как добраться</p>
-                <p className="text-text-muted">
-                  Вход со двора, вывеска над дверью. Ближайшая парковка — вдоль дома,
-                  первые 30 минут бесплатно. Если не нашли вход, позвоните — встретим.
-                </p>
-              </div>
+              {CONTACTS.directions && (
+                <div className="flex flex-col gap-2 rounded-xl bg-accent-subtle px-5 py-4">
+                  <p className="font-semibold">Как добраться</p>
+                  <p className="text-text-muted">{CONTACTS.directions}</p>
+                </div>
+              )}
             </div>
           </div>
         </Container>
       </Section>
 
-      <Section id="request" background="subtle">
-        <Container width="narrow">
-          <SectionHeading
-            align="center"
-            title="Оставить заявку"
-            subtitle="Опишите задачу и приложите фото изделия — так мастер ответит точнее."
-          />
-          <RequestForm variant="full" source="contacts" />
-        </Container>
-      </Section>
+      <CtaSection
+        id="call"
+        title="Позвоните нам"
+        description="Ответим на вопросы по ремонту и пошиву, назовём срок и предварительную цену."
+      />
 
       <script {...jsonLdScriptProps(localBusinessJsonLd(CONTACTS))} />
     </>

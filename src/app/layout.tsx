@@ -3,7 +3,6 @@ import { Manrope, Playfair_Display } from 'next/font/google';
 
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { MessengerFab } from '@/components/layout/MessengerFab';
 import { StickyCta } from '@/components/layout/StickyCta';
 import { CONTACTS } from '@/content/contacts';
 import { MAIN_NAV, SITE_NAME, SITE_URL } from '@/lib/constants';
@@ -57,8 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header nav={MAIN_NAV} contacts={CONTACTS} />
         <main id="main">{children}</main>
         <Footer nav={MAIN_NAV} contacts={CONTACTS} />
-        <MessengerFab contacts={CONTACTS} />
-        <StickyCta />
+        <StickyCta label="Позвонить" href={`tel:${CONTACTS.phone}`} />
       </body>
     </html>
   );

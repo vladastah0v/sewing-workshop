@@ -156,8 +156,15 @@ export interface ContactInfoData {
   addressLine: string;
   city: string;
   postalCode?: string;
-  /** [широта, долгота] для карты и Schema.org. */
-  coordinates: [number, number];
+  /**
+   * [широта, долгота] для Schema.org. Необязательны: пока точка не выверена
+   * по карте, geo в микроразметку не попадает — неверный пин хуже отсутствия.
+   */
+  coordinates?: [number, number];
+  /** Адрес строкой для виджета карты, когда координат ещё нет. */
+  mapQuery?: string;
+  /** Как пройти/проехать — выводится рядом с картой. */
+  directions?: string;
   workingHours: WorkingHours[];
   messengers: MessengerLink[];
   /** Часовой пояс IANA — нужен для бейджа «Открыто/Закрыто». */
@@ -166,10 +173,13 @@ export interface ContactInfoData {
   legalEntity?: LegalEntity;
 }
 
+/**
+ * Мессенджер рядом с телефоном. href необязателен: пока у мастерской нет
+ * реальных аккаунтов, значки выводятся как косметика (span, не ссылка).
+ */
 export interface MessengerLink {
   kind: 'whatsapp' | 'telegram' | 'viber' | 'vk' | 'max';
-  /** Готовый href, включая протокол. */
-  href: string;
+  href?: string;
   label: string;
 }
 
@@ -196,6 +206,6 @@ export type IconName =
   | 'scissors' | 'needle' | 'ruler' | 'hanger' | 'zipper' | 'shirt' | 'dress'
   | 'clock' | 'shield' | 'star' | 'quote' | 'sparkle'
   | 'users' | 'award' | 'truck' | 'wallet' | 'pencil'
-  | 'phone' | 'mail' | 'map-pin' | 'whatsapp' | 'telegram' | 'viber'
+  | 'phone' | 'mail' | 'map-pin' | 'whatsapp' | 'telegram' | 'viber' | 'max'
   | 'chevron-left' | 'chevron-right' | 'chevron-down' | 'arrow-right'
   | 'close' | 'menu' | 'check' | 'alert' | 'info' | 'upload' | 'image';

@@ -5,12 +5,13 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import type { HeaderProps, NavLink } from '@/types';
-import { cn, formatPhone } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { ANALYTICS_EVENTS, SITE_NAME } from '@/lib/constants';
 import { track } from '@/lib/analytics';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { Icon } from '@/components/ui/Icon';
+import { MessengerBadges } from '@/components/ui/MessengerBadges';
 
 /** Шапка: логотип, меню с одним уровнем вложенности, телефон, CTA. */
 export function Header({ nav, contacts, transparent = false, className, id }: HeaderProps) {
@@ -49,16 +50,24 @@ export function Header({ nav, contacts, transparent = false, className, id }: He
           </ul>
         </nav>
 
-        <div className="flex items-center gap-2">
-          <a
+        <div className="flex items-center gap-3">
+          <div className="hidden items-center gap-3 md:flex">
+            <a
+              href={`tel:${contacts.phone}`}
+              onClick={() => track(ANALYTICS_EVENTS.phoneClick, { place: 'header' })}
+              className="text-lg font-bold whitespace-nowrap hover:text-accent"
+            >
+              {contacts.phoneDisplay}
+            </a>
+            <MessengerBadges messengers={contacts.messengers} size="sm" />
+          </div>
+          <Button
             href={`tel:${contacts.phone}`}
-            onClick={() => track(ANALYTICS_EVENTS.phoneClick, { place: 'header' })}
-            className="hidden font-semibold whitespace-nowrap hover:text-accent md:inline"
+            size="sm"
+            iconLeft="phone"
+            className="hidden sm:inline-flex"
           >
-            {formatPhone(contacts.phone)}
-          </a>
-          <Button href="/contacts" size="sm" className="hidden sm:inline-flex">
-            Оставить заявку
+            Позвонить
           </Button>
           <button
             type="button"
@@ -98,9 +107,19 @@ export function Header({ nav, contacts, transparent = false, className, id }: He
               ))}
             </div>
           ))}
-          <Button href="/contacts" fullWidth className="mt-4">
-            Оставить заявку
-          </Button>
+          <div className="mt-4 flex flex-col gap-3">
+            <a
+              href={`tel:${contacts.phone}`}
+              onClick={() => track(ANALYTICS_EVENTS.phoneClick, { place: 'mobile-menu' })}
+              className="text-2xl font-bold hover:text-accent"
+            >
+              {contacts.phoneDisplay}
+            </a>
+            <MessengerBadges messengers={contacts.messengers} />
+            <Button href={`tel:${contacts.phone}`} iconLeft="phone" fullWidth>
+              Позвонить
+            </Button>
+          </div>
         </Container>
       </div>
     </header>

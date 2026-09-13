@@ -26,6 +26,7 @@ export function MapSection({ contacts, heading = 'Где нас найти', cla
           <div className="overflow-hidden rounded-xl border border-border">
             <MapEmbed
               coordinates={contacts.coordinates}
+              query={contacts.mapQuery ?? `${contacts.city}, ${contacts.addressLine}`}
               zoom={16}
               markerTitle={contacts.organizationName}
               height="400px"

@@ -19,7 +19,7 @@ import { PortfolioGallery } from '@/components/features/PortfolioGallery';
 import { PriceTable } from '@/components/features/PriceTable';
 import { ProcessSteps } from '@/components/features/ProcessSteps';
 import { ServiceGrid } from '@/components/features/ServiceGrid';
-import { RequestForm } from '@/components/forms/RequestForm';
+import { CtaSection } from '@/components/sections/CtaSection';
 import { CONTACTS } from '@/content/contacts';
 import { PORTFOLIO } from '@/content/portfolio';
 import { PRICES } from '@/content/prices';
@@ -177,16 +177,11 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         </Container>
       </Section>
 
-      <Section id="request">
-        <Container width="narrow">
-          <SectionHeading
-            align="center"
-            title={`Оставьте заявку: ${service.title.toLowerCase()}`}
-            subtitle={`Перезвоним в течение 15 минут в рабочее время — ${CONTACTS.phoneDisplay}.`}
-          />
-          <RequestForm variant="full" source="service-page" defaultServiceType={service.category} />
-        </Container>
-      </Section>
+      <CtaSection
+        id="contact"
+        title={`Записаться: ${service.title.toLowerCase()}`}
+        description="Позвоните — уточним детали и назовём срок."
+      />
 
       {otherServices.length > 0 && (
         <Section background="subtle">

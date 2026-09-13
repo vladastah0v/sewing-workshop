@@ -11,7 +11,7 @@ import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { PortfolioGallery } from '@/components/features/PortfolioGallery';
-import { RequestForm } from '@/components/forms/RequestForm';
+import { CtaSection } from '@/components/sections/CtaSection';
 import { PORTFOLIO } from '@/content/portfolio';
 import { itemListJsonLd, jsonLdScriptProps } from '@/lib/seo';
 
@@ -48,16 +48,11 @@ export default function PortfolioPage() {
         </Container>
       </Section>
 
-      <Section id="request" background="subtle">
-        <Container width="narrow">
-          <SectionHeading
-            align="center"
-            title="Хотите так же?"
-            subtitle="Пришлите фото своей вещи — скажем, что с ней можно сделать и сколько это будет стоить."
-          />
-          <RequestForm variant="full" source="portfolio" />
-        </Container>
-      </Section>
+      <CtaSection
+        id="contact"
+        title="Хотите так же?"
+        description="Позвоните и опишите свою вещь — скажем, что с ней можно сделать и сколько это будет стоить."
+      />
 
       <script {...jsonLdScriptProps(jsonLd)} />
     </>

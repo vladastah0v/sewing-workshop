@@ -7,15 +7,16 @@
  * Считает на клиенте, без запросов: цена «от» из услуги × коэффициенты.
  * Коэффициенты временные — реальные множители запрошены у заказчика
  * (см. docs/requests-forms.md, открытый вопрос п.3 контракта).
- * Заявку отправляет вложенный RequestForm — своей отправки у калькулятора нет.
+ * Формы заявки на сайте нет (решение заказчика от 13.09.2026): под расчётом
+ * стоит блок с телефоном.
  */
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { Card, EmptyState, Input, Select } from '@/components/ui';
+import { Button, Card, EmptyState, Input, MessengerBadges, Select } from '@/components/ui';
+import { CONTACTS } from '@/content/contacts';
 import { cn, formatLeadTime, formatPrice } from '@/lib/utils';
 import type { CalculatorFormProps, SelectOption, Service } from '@/types';
-import { RequestForm } from './RequestForm';
 
 /** Сложность работы. factor — множитель к цене «от». */
 const COMPLEXITY: { value: string; label: string; factor: number }[] = [
@@ -41,7 +42,6 @@ const roundTo50 = (value: number) => Math.round(value / 50) * 50;
 
 export function CalculatorForm({
   services,
-  source = 'calculator',
   onEstimate,
   className,
   id,
@@ -66,24 +66,6 @@ export function CalculatorForm({
 
   // Колбэк держим в ref: родитель почти всегда передаёт стрелку,
   // в зависимостях эффекта она давала бы лишние вызовы на каждый рендер.
-  // Итог расчёта уходит в заявку текстом: менеджер сразу видит,
-  // что человек выбрал, и не звонит переспрашивать (requests-forms.md, п.2).
-  const estimateSummary = useMemo(() => {
-    if (!service || !estimate) return undefined;
-
-    const count = Math.min(Math.max(Number.parseInt(quantity, 10) || 1, 1), MAX_QUANTITY);
-    const complexityLabel = COMPLEXITY.find((item) => item.value === complexity)?.label ?? '';
-    const urgencyLabel = URGENCY.find((item) => item.value === urgency)?.label ?? '';
-
-    return [
-      `Расчёт с сайта: ${service.title}`,
-      `Количество: ${count}`,
-      `Сложность: ${complexityLabel}`,
-      `Срочность: ${urgencyLabel}`,
-      `Ориентир по цене: ${formatPrice(estimate.min)} – ${formatPrice(estimate.max)}`,
-    ].join('\n');
-  }, [service, estimate, quantity, complexity, urgency]);
-
   const onEstimateRef = useRef(onEstimate);
   useEffect(() => {
     onEstimateRef.current = onEstimate;
@@ -99,7 +81,7 @@ export function CalculatorForm({
         className={className}
         iconName="info"
         title="Список услуг пока пуст"
-        description="Расчёт появится, как только услуги будут добавлены. Пока оставьте заявку — мастер назовёт цену."
+        description="Расчёт появится, как только услуги будут добавлены. Пока уточните цену по телефону."
       />
     );
   }
@@ -171,15 +153,17 @@ export function CalculatorForm({
         </p>
       </Card>
 
-      <RequestForm
-        variant="compact"
-        source={source}
-        defaultServiceType={service?.category}
-        defaultMessage={estimateSummary}
-        title="Узнать точную цену"
-        description="Оставьте телефон — перезвоним, уточним детали и назовём стоимость."
-        submitLabel="Получить расчёт"
-      />
+      {/* Форма заявки убрана с сайта — расчёт уточняют по телефону. */}
+      <Card padding="lg" className="flex flex-col items-center gap-4 text-center">
+        <p className="font-heading text-xl">Узнать точную цену</p>
+        <p className="text-text-muted">
+          Позвоните и назовите результат расчёта — мастер уточнит детали и подтвердит стоимость.
+        </p>
+        <Button size="lg" href={`tel:${CONTACTS.phone}`} iconLeft="phone">
+          {CONTACTS.phoneDisplay}
+        </Button>
+        <MessengerBadges messengers={CONTACTS.messengers} size="sm" />
+      </Card>
     </div>
   );
 }

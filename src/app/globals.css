@@ -172,3 +172,37 @@
     border: 0;
   }
 }
+
+/* ---- Фоновые узоры на швейную тему -------------------------------
+   Нарисованы SVG прямо в CSS: ни одного сетевого запроса, вес — байты,
+   масштабируются без потерь и перекрашиваются правкой одного места.
+   Готовые фотографии из интернета сюда не берём: у мастерской нет на них
+   прав, а Core Web Vitals платит за каждый мегабайт (ТЗ п.7.2).
+   Узор лежит ПОД контентом и не трогает контраст текста —
+   непрозрачность в пределах 5–10%. -------------------------------- */
+@layer utilities {
+  /* Строчка машинного шва: пунктир с проколами иглы. */
+  .bg-stitch {
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2748%27%20height%3D%2748%27%20viewBox%3D%270%200%2048%2048%27%3E%0A%3Cg%20fill%3D%27none%27%20stroke%3D%27%232e2820%27%20stroke-width%3D%271.6%27%20stroke-linecap%3D%27round%27%20stroke-dasharray%3D%277%209%27%20opacity%3D%270.09%27%3E%0A%3Cpath%20d%3D%27M-6%2012h60%27%2F%3E%3Cpath%20d%3D%27M-6%2036h60%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20fill%3D%27%232e2820%27%20opacity%3D%270.07%27%3E%3Ccircle%20cx%3D%2712%27%20cy%3D%2724%27%20r%3D%271.4%27%2F%3E%3Ccircle%20cx%3D%2736%27%20cy%3D%2724%27%20r%3D%271.4%27%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E");
+    background-repeat: repeat;
+  }
+
+  /* Переплетение нитей — фактура ткани крупным планом. */
+  .bg-weave {
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2722%27%20height%3D%2722%27%20viewBox%3D%270%200%2022%2022%27%3E%0A%3Cg%20stroke%3D%27%232e2820%27%20stroke-width%3D%271%27%20opacity%3D%270.06%27%3E%0A%3Cpath%20d%3D%27M0%205.5h22M0%2016.5h22M5.5%200v22M16.5%200v22%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20stroke%3D%27%232e2820%27%20stroke-width%3D%272.4%27%20opacity%3D%270.05%27%20stroke-linecap%3D%27round%27%3E%0A%3Cpath%20d%3D%27M0%205.5h5.5M11%2016.5h5.5%27%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E");
+    background-repeat: repeat;
+  }
+
+  /* Нить, бегущая по тёмному фону подвала. */
+  .bg-thread {
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27160%27%20height%3D%2780%27%20viewBox%3D%270%200%20160%2080%27%3E%0A%3Cg%20fill%3D%27none%27%20stroke%3D%27%23f4efe7%27%20stroke-width%3D%271.4%27%20opacity%3D%270.10%27%20stroke-linecap%3D%27round%27%3E%0A%3Cpath%20d%3D%27M-10%2024C30%204%2050%2044%2090%2024s60%2020%2090%200%27%2F%3E%0A%3Cpath%20d%3D%27M-10%2056C30%2036%2050%2076%2090%2056s60%2020%2090%200%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20fill%3D%27none%27%20stroke%3D%27%23f4efe7%27%20stroke-width%3D%271.2%27%20stroke-dasharray%3D%275%208%27%20opacity%3D%270.08%27%20stroke-linecap%3D%27round%27%3E%0A%3Cpath%20d%3D%27M-10%2040h180%27%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E");
+    background-repeat: repeat;
+  }
+
+  /* Первый экран: тёплое свечение поверх фактуры, чтобы фон не был плоским. */
+  .hero-weave {
+    background-image:
+      radial-gradient(58rem 30rem at 82% -12%, var(--color-accent-subtle), transparent 62%),
+      url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2722%27%20height%3D%2722%27%20viewBox%3D%270%200%2022%2022%27%3E%0A%3Cg%20stroke%3D%27%232e2820%27%20stroke-width%3D%271%27%20opacity%3D%270.06%27%3E%0A%3Cpath%20d%3D%27M0%205.5h22M0%2016.5h22M5.5%200v22M16.5%200v22%27%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20stroke%3D%27%232e2820%27%20stroke-width%3D%272.4%27%20opacity%3D%270.05%27%20stroke-linecap%3D%27round%27%3E%0A%3Cpath%20d%3D%27M0%205.5h5.5M11%2016.5h5.5%27%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E");
+  }
+}

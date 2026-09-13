@@ -9,6 +9,7 @@ import { Container } from '@/components/ui/Container';
 import { Icon } from '@/components/ui/Icon';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
+import { cn } from '@/lib/utils';
 
 export function AdvantagesSection({
   items,
@@ -17,7 +18,7 @@ export function AdvantagesSection({
   id,
 }: AdvantagesSectionProps) {
   return (
-    <Section id={id} background="subtle" className={className}>
+    <Section id={id} background="subtle" className={cn('bg-stitch', className)}>
       <Container>
         <SectionHeading eyebrow="Преимущества" title={heading} align="center" />
 
