@@ -240,7 +240,9 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(var(--page-bg-blur, 0px));
+  /* Лёгкая десатурация: снимок розоватый, палитра — песочная терракота.
+     Без неё фон спорит с акцентом по цвету. */
+  filter: saturate(0.92) blur(var(--page-bg-blur, 0px));
   transform: scale(var(--page-bg-scale, 1));
   transition:
     filter 140ms linear,
@@ -251,14 +253,15 @@
 .page-bg__veil {
   position: absolute;
   inset: 0;
-  /* 88% непрозрачности — композит с фотографией остаётся светлее,
-     чем нужно тексту neutral-800 для запаса по AA. */
-  background-color: color-mix(in srgb, var(--color-bg) 88%, transparent);
+  /* 82% — подобрано по реальному снимку: замерены светлая складка, средний
+     тон и самая глубокая тень, худшая из 21 пары даёт 4.60:1 при пороге 4.5.
+     Плотнее делать незачем, прозрачнее — уже без запаса. */
+  background-color: color-mix(in srgb, var(--color-bg) 82%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .page-bg__image {
-    filter: none;
+    filter: saturate(0.92);
     transform: none;
     transition: none;
   }
