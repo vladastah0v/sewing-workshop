@@ -6,15 +6,13 @@ import { useEffect, useState } from 'react';
 
 import type { HeaderProps, NavLink } from '@/types';
 import { cn } from '@/lib/utils';
-import { ANALYTICS_EVENTS, SITE_NAME } from '@/lib/constants';
-import { track } from '@/lib/analytics';
-import { Button } from '@/components/ui/Button';
+import { SITE_NAME } from '@/lib/constants';
 import { Container } from '@/components/ui/Container';
 import { Icon } from '@/components/ui/Icon';
 import { MessengerBadges } from '@/components/ui/MessengerBadges';
 
 /** Шапка: логотип, меню с одним уровнем вложенности, телефон, CTA. */
-export function Header({ nav, contacts, transparent = false, className, id }: HeaderProps) {
+export function Header({ nav, contacts, className, id }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
 
@@ -33,7 +31,7 @@ export function Header({ nav, contacts, transparent = false, className, id }: He
       id={id}
       className={cn(
         'sticky top-0 z-[var(--z-header)] border-b border-border',
-        transparent && !menuOpen ? 'bg-bg/95 backdrop-blur' : 'bg-bg',
+        menuOpen ? 'bg-bg' : 'bg-bg/80 backdrop-blur',
         className,
       )}
     >
@@ -52,23 +50,12 @@ export function Header({ nav, contacts, transparent = false, className, id }: He
 
         <div className="flex items-center gap-3">
           <div className="hidden items-center gap-3 md:flex">
-            <a
-              href={`tel:${contacts.phone}`}
-              onClick={() => track(ANALYTICS_EVENTS.phoneClick, { place: 'header' })}
-              className="text-lg font-bold whitespace-nowrap hover:text-accent"
-            >
+            {/* Номер намеренно не ссылка: решение заказчика от 14.09.2026. */}
+            <span className="text-lg font-bold whitespace-nowrap select-all">
               {contacts.phoneDisplay}
-            </a>
+            </span>
             <MessengerBadges messengers={contacts.messengers} size="sm" />
           </div>
-          <Button
-            href={`tel:${contacts.phone}`}
-            size="sm"
-            iconLeft="phone"
-            className="hidden sm:inline-flex"
-          >
-            Позвонить
-          </Button>
           <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
@@ -108,17 +95,8 @@ export function Header({ nav, contacts, transparent = false, className, id }: He
             </div>
           ))}
           <div className="mt-4 flex flex-col gap-3">
-            <a
-              href={`tel:${contacts.phone}`}
-              onClick={() => track(ANALYTICS_EVENTS.phoneClick, { place: 'mobile-menu' })}
-              className="text-2xl font-bold hover:text-accent"
-            >
-              {contacts.phoneDisplay}
-            </a>
+            <span className="text-2xl font-bold select-all">{contacts.phoneDisplay}</span>
             <MessengerBadges messengers={contacts.messengers} />
-            <Button href={`tel:${contacts.phone}`} iconLeft="phone" fullWidth>
-              Позвонить
-            </Button>
           </div>
         </Container>
       </div>

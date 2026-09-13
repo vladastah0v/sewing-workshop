@@ -8,7 +8,6 @@
  */
 
 import type { CtaSectionProps } from '@/types';
-import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { MessengerBadges } from '@/components/ui/MessengerBadges';
 import { Section } from '@/components/ui/Section';
@@ -23,9 +22,7 @@ export function CtaSection({ title, description, className, id }: CtaSectionProp
         <SectionHeading title={title} subtitle={description} align="center" />
 
         <div className="flex flex-col items-center gap-5">
-          <Button size="lg" href={`tel:${CONTACTS.phone}`} iconLeft="phone">
-            {CONTACTS.phoneDisplay}
-          </Button>
+          <p className="font-heading text-3xl select-all lg:text-4xl">{CONTACTS.phoneDisplay}</p>
 
           <MessengerBadges messengers={CONTACTS.messengers} />
 

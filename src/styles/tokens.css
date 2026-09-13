@@ -28,6 +28,9 @@
   --color-neutral-50:  #f4efe7;
   --color-neutral-100: #e9e1d5;
   --color-neutral-200: #dcd1c1;
+  /* Промежуточный шаг: фон приглушённых блоков. На neutral-300 вторичный
+     текст даёт 4.0:1 — ниже AA, поэтому для фона нужен отдельный, светлее. */
+  --color-neutral-250: #d3c7b6;
   --color-neutral-300: #c6b7a2;
   --color-neutral-400: #9f8e77;
   --color-neutral-500: #7d6e59;
@@ -45,7 +48,7 @@
   /* ---------- РОЛЕВЫЕ ТОКЕНЫ (используй в компонентах именно их) ---------- */
   --color-bg:            var(--color-neutral-100);
   --color-bg-subtle:     var(--color-neutral-200);
-  --color-bg-muted:      var(--color-neutral-300);
+  --color-bg-muted:      var(--color-neutral-250);
   --color-bg-inverse:    var(--color-neutral-900);
   --color-surface:       var(--color-neutral-50);
   --color-border:        var(--color-neutral-300);

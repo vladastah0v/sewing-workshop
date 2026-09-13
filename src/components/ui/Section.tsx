@@ -1,10 +1,13 @@
 import type { SectionProps } from '@/types';
 import { cn } from '@/lib/utils';
 
+// Фоны полупрозрачны: сквозь них просвечивает полотно PageBackground.
+// Плотности подобраны так, чтобы контраст текста остался в пределах AA —
+// проверено расчётом композита «вуаль поверх фотографии».
 const BACKGROUNDS = {
-  default: 'bg-bg text-text',
-  subtle: 'bg-bg-subtle text-text',
-  muted: 'bg-bg-muted text-text',
+  default: 'text-text',
+  subtle: 'bg-bg-subtle/80 text-text',
+  muted: 'bg-bg-muted/90 text-text',
   inverse: 'bg-bg-inverse text-text-inverse',
 } as const;
 

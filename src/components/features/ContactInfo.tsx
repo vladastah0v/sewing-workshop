@@ -2,7 +2,8 @@
  * ContactInfo — блок контактов (ТЗ п.5.8).
  * Владелец: Агент 3. Контракт пропсов: ContactInfoProps в src/types/ui.ts.
  *
- * Телефон и почта — настоящие ссылки tel:/mailto:, адрес — в address.
+ * Почта — ссылка mailto:. Телефон выводится текстом: кликабельность
+ * отключена решением заказчика от 14.09.2026.
  * Клик по телефону уходит целью в аналитику, поэтому обработчик ставит
  * не этот компонент, а форма/шапка Агента 4 и Агента 1 — здесь чистая разметка.
  */
@@ -78,9 +79,7 @@ export function ContactInfo({
         <Icon name="phone" size={22} className={iconClass} />
         <div className="flex flex-col gap-1">
           <span className="text-sm text-text-muted">Телефон</span>
-          <a href={`tel:${contacts.phone}`} className="text-lg font-semibold hover:text-accent">
-            {contacts.phoneDisplay}
-          </a>
+          <span className="text-lg font-semibold select-all">{contacts.phoneDisplay}</span>
         </div>
       </div>
 

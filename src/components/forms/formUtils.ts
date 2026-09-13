@@ -3,7 +3,7 @@
 /**
  * Общие мелочи для форм. Владелец: Агент 4.
  * Здесь нет компонентов — только справочники опций и помощник фокуса,
- * чтобы RequestForm/ReviewForm/CalculatorForm не дублировали одно и то же.
+ * чтобы RequestForm и ReviewForm не дублировали одно и то же.
  */
 
 import { SERVICE_LABELS } from '@/lib/constants';

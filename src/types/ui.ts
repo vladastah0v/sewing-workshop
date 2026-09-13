@@ -13,11 +13,8 @@ import type {
   FaqItem,
   IconName,
   ImageAsset,
-  Master,
   PortfolioItem,
   PriceCategoryData,
-  ProcessStepData,
-  Review,
   Service,
   ServiceSlug,
 } from './content';
@@ -238,8 +235,6 @@ export interface NavLink {
 export interface HeaderProps extends BaseProps {
   nav: NavLink[];
   contacts: ContactInfoData;
-  /** Прозрачная шапка поверх hero на главной. default: false */
-  transparent?: boolean;
 }
 
 export interface FooterProps extends BaseProps {
@@ -251,13 +246,8 @@ export interface BreadcrumbsProps extends BaseProps {
   items: BreadcrumbItem[];
 }
 
-export interface StickyCtaProps extends BaseProps {
-  label?: string; // default: Оставить заявку
-  onClick?: () => void;
-  href?: string;
-  /** Появляется после прокрутки на N px. default: 480 */
-  showAfterScroll?: number;
-}
+/** Фоновое полотно страницы: фотография ткани + вуаль + «вода» при скролле. */
+export type PageBackgroundProps = BaseProps;
 
 export interface MessengerBadgesProps extends BaseProps {
   messengers: ContactInfoData['messengers'];
@@ -297,11 +287,6 @@ export interface ReviewFormProps extends BaseProps {
   submitLabel?: string; // default: Отправить отзыв
   onSuccess?: (data: ReviewResponseData) => void;
   onError?: (error: ApiError) => void;
-}
-
-export interface CalculatorFormProps extends BaseProps {
-  services: Service[];
-  onEstimate?: (estimate: { min: number; max: number }) => void;
 }
 
 export interface ConsentCheckboxProps extends BaseProps {
@@ -386,28 +371,6 @@ export interface BeforeAfterSliderProps extends BaseProps {
   labels?: { before: string; after: string };
 }
 
-export interface ReviewCardProps extends BaseProps {
-  review: Review;
-  /** Обрезать длинный текст кнопкой Читать полностью. default: true */
-  truncate?: boolean;
-}
-
-export interface ReviewSliderProps extends BaseProps {
-  reviews: Review[];
-  autoplay?: boolean; // default: false
-  /** Видимых карточек на десктопе. default: 3 */
-  slidesPerView?: 1 | 2 | 3;
-}
-
-export interface MasterCardProps extends BaseProps {
-  master: Master;
-}
-
-export interface ProcessStepsProps extends BaseProps {
-  steps: ProcessStepData[];
-  orientation?: 'horizontal' | 'vertical'; // default: 'horizontal'
-}
-
 export interface ContactInfoProps extends BaseProps {
   contacts: ContactInfoData;
   /** Бейдж Открыто/Закрыто. default: true */
@@ -460,19 +423,6 @@ export interface PortfolioSectionProps extends BaseProps {
   items: PortfolioItem[];
   heading?: string;
   moreHref?: string;
-}
-
-export interface ProcessSectionProps extends BaseProps {
-  steps: ProcessStepData[];
-  heading?: string;
-}
-
-export interface ReviewsSectionProps extends BaseProps {
-  reviews: Review[];
-  heading?: string;
-  moreHref?: string;
-  /** Средний балл для микроразметки AggregateRating. */
-  averageRating?: number;
 }
 
 export interface PriceTeaserSectionProps extends BaseProps {

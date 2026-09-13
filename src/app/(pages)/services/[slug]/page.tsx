@@ -17,13 +17,11 @@ import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { PortfolioGallery } from '@/components/features/PortfolioGallery';
 import { PriceTable } from '@/components/features/PriceTable';
-import { ProcessSteps } from '@/components/features/ProcessSteps';
 import { ServiceGrid } from '@/components/features/ServiceGrid';
 import { CtaSection } from '@/components/sections/CtaSection';
 import { CONTACTS } from '@/content/contacts';
 import { PORTFOLIO } from '@/content/portfolio';
 import { PRICES } from '@/content/prices';
-import { PROCESS_STEPS } from '@/content/process';
 import { SERVICES, getServiceBySlug } from '@/content/services';
 import { jsonLdScriptProps, serviceJsonLd } from '@/lib/seo';
 import { formatLeadTime, formatPrice } from '@/lib/utils';
@@ -143,13 +141,6 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
               />
             )}
           </div>
-        </Container>
-      </Section>
-
-      <Section background="subtle">
-        <Container>
-          <SectionHeading title="Как проходит работа" />
-          <ProcessSteps steps={PROCESS_STEPS} />
         </Container>
       </Section>
 

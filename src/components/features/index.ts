@@ -5,7 +5,6 @@ export { PriceTable } from './PriceTable';
 export { PortfolioGallery } from './PortfolioGallery';
 export { PortfolioCard } from './PortfolioCard';
 export { BeforeAfterSlider } from './BeforeAfterSlider';
-export { ProcessSteps } from './ProcessSteps';
 export { ContactInfo } from './ContactInfo';
 export { WorkStatusBadge } from './WorkStatusBadge';
 export { MapEmbed } from './MapEmbed';

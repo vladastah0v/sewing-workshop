@@ -3,7 +3,7 @@ import { Manrope, Playfair_Display } from 'next/font/google';
 
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { StickyCta } from '@/components/layout/StickyCta';
+import { PageBackground } from '@/components/layout/PageBackground';
 import { CONTACTS } from '@/content/contacts';
 import { MAIN_NAV, SITE_NAME, SITE_URL } from '@/lib/constants';
 
@@ -50,13 +50,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ru" className={`${playfair.variable} ${manrope.variable}`}>
       <body>
+        <PageBackground />
         <a className="skip-link" href="#main">
           Перейти к содержимому
         </a>
         <Header nav={MAIN_NAV} contacts={CONTACTS} />
         <main id="main">{children}</main>
         <Footer nav={MAIN_NAV} contacts={CONTACTS} />
-        <StickyCta label="Позвонить" href={`tel:${CONTACTS.phone}`} />
       </body>
     </html>
   );

@@ -11,7 +11,7 @@ export const CONTACTS: ContactInfoData = {
   organizationName: 'Швейная мастерская ЛаТас',
   phone: '+79033509264',
   phoneDisplay: '+7 (903) 350-92-64',
-  email: 'info@latas-ufa.ru',
+  email: 'daristarhova@mail.ru',
   addressLine: 'ул. Ферина, 13/1',
   city: 'Уфа',
   // Координаты не выверены по карте — виджет ищет точку по адресу (mapQuery),

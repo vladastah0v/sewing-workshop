@@ -9,10 +9,8 @@ import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
-import { ProcessSteps } from '@/components/features/ProcessSteps';
 import { ServiceGrid } from '@/components/features/ServiceGrid';
 import { CtaSection } from '@/components/sections/CtaSection';
-import { PROCESS_STEPS } from '@/content/process';
 import { SERVICES } from '@/content/services';
 import { itemListJsonLd, jsonLdScriptProps } from '@/lib/seo';
 
@@ -44,16 +42,6 @@ export default function ServicesPage() {
             subtitle="Четыре направления работы. Выберите подходящее — на странице услуги есть цены, сроки и примеры работ."
           />
           <ServiceGrid services={SERVICES} columns={2} />
-        </Container>
-      </Section>
-
-      <Section background="subtle">
-        <Container>
-          <SectionHeading
-            title="Как проходит заказ"
-            subtitle="Одинаково для любой услуги: от заявки до выдачи с гарантией."
-          />
-          <ProcessSteps steps={PROCESS_STEPS} />
         </Container>
       </Section>
 

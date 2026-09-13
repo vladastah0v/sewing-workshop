@@ -30,13 +30,10 @@ export function Footer({ nav, contacts, className, id }: FooterProps) {
         </nav>
 
         <address className="flex flex-col gap-3 not-italic">
-          <a
-            href={`tel:${contacts.phone}`}
-            className="flex items-center gap-2 text-lg font-bold hover:text-brand-300"
-          >
+          <p className="flex items-center gap-2 text-lg font-bold">
             <Icon name="phone" size={20} />
-            {contacts.phoneDisplay}
-          </a>
+            <span className="select-all">{contacts.phoneDisplay}</span>
+          </p>
           <a href={`mailto:${contacts.email}`} className="flex items-center gap-2 text-neutral-200 hover:text-neutral-0">
             <Icon name="mail" size={20} />
             {contacts.email}

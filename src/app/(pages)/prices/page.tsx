@@ -10,11 +10,9 @@ import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { PriceTable } from '@/components/features/PriceTable';
-import { CalculatorForm } from '@/components/forms/CalculatorForm';
 import { CtaSection } from '@/components/sections/CtaSection';
 import { FAQ } from '@/content/faq';
 import { PRICES } from '@/content/prices';
-import { SERVICES } from '@/content/services';
 import { faqPageJsonLd, jsonLdScriptProps } from '@/lib/seo';
 import { Accordion } from '@/components/ui/Accordion';
 
@@ -45,16 +43,6 @@ export default function PricesPage() {
             subtitle="Семь групп работ — от подшива брюк до пошива по индивидуальным меркам. Осмотр и консультация бесплатные."
           />
           <PriceTable categories={PRICES} defaultOpenGroup="women" />
-        </Container>
-      </Section>
-
-      <Section background="subtle">
-        <Container width="narrow">
-          <SectionHeading
-            title="Прикинуть стоимость"
-            subtitle="Выберите услугу и получите вилку цены до визита в мастерскую."
-          />
-          <CalculatorForm services={SERVICES} />
         </Container>
       </Section>
 
