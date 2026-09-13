@@ -38,16 +38,7 @@ export const PRICE_GROUP_LABELS: Record<PriceGroup, string> = {
 
 /** Главное меню. Единственный источник — используют Header и Footer. */
 export const MAIN_NAV: NavLink[] = [
-  {
-    label: 'Услуги',
-    href: '/services',
-    children: [
-      { label: 'Ремонт одежды', href: '/services/repair' },
-      { label: 'Пошив на заказ', href: '/services/tailoring' },
-      { label: 'По индивидуальным меркам', href: '/services/custom-fit' },
-      { label: 'Реставрация и переделка', href: '/services/restoration' },
-    ],
-  },
+  { label: 'Услуги', href: '/services' },
   { label: 'Цены', href: '/prices' },
   { label: 'Работы', href: '/portfolio' },
   { label: 'Контакты', href: '/contacts' },

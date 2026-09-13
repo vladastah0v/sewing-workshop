@@ -224,11 +224,10 @@ export interface SectionHeadingProps extends BaseProps {
 /* Layout (src/components/layout) — Агент 1                            */
 /* ------------------------------------------------------------------ */
 
+/** Меню плоское: подменю убрано решением заказчика от 14.09.2026. */
 export interface NavLink {
   label: string;
   href: string;
-  /** Один уровень вложенности, глубже нельзя. */
-  children?: NavLink[];
 }
 
 export interface HeaderProps extends BaseProps {
