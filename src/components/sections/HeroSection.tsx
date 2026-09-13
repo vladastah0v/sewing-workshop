@@ -23,12 +23,16 @@ export function HeroSection({
   id,
 }: HeroSectionProps) {
   return (
-    <Section id={id} background="subtle" className={cn('hero-weave', className)}>
-      <Container className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+    <Section id={id} background="subtle" className={className}>
+      {/* Вторая колонка появляется только вместе с изображением: иначе
+          на десктопе половина экрана осталась бы пустой. */}
+      <Container
+        className={cn('grid items-center gap-10 lg:gap-16', image && 'lg:grid-cols-2')}
+      >
         <div className="flex flex-col gap-6">
           <h1 className="font-heading text-4xl lg:text-5xl">{title}</h1>
 
-          <p className="max-w-[52ch] text-lg text-text-muted">{subtitle}</p>
+          {subtitle && <p className="max-w-[52ch] text-lg text-text-muted">{subtitle}</p>}
 
           {highlights && highlights.length > 0 && (
             <ul className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-x-6">

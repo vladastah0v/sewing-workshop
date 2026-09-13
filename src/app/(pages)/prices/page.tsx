@@ -11,10 +11,7 @@ import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { PriceTable } from '@/components/features/PriceTable';
 import { CtaSection } from '@/components/sections/CtaSection';
-import { FAQ } from '@/content/faq';
 import { PRICES } from '@/content/prices';
-import { faqPageJsonLd, jsonLdScriptProps } from '@/lib/seo';
-import { Accordion } from '@/components/ui/Accordion';
 
 export const metadata: Metadata = {
   title: 'Цены на ремонт и пошив одежды — прайс-лист мастерской',
@@ -23,9 +20,6 @@ export const metadata: Metadata = {
     'от 1 500 ₽, пошив на заказ от 4 500 ₽. Точную сумму называем после замера.',
   alternates: { canonical: '/prices' },
 };
-
-/** На странице цен показываем вопросы про деньги и сроки. */
-const PRICE_FAQ = FAQ.filter((item) => ['q-2', 'q-7', 'q-8', 'q-6'].includes(item.id));
 
 export default function PricesPage() {
   return (
@@ -46,27 +40,11 @@ export default function PricesPage() {
         </Container>
       </Section>
 
-      <Section>
-        <Container width="narrow">
-          <SectionHeading title="Вопросы про оплату и сроки" />
-          <Accordion
-            items={PRICE_FAQ.map((item) => ({
-              id: item.id,
-              title: item.question,
-              content: item.answer,
-            }))}
-            multiple
-          />
-        </Container>
-      </Section>
-
       <CtaSection
         id="contact"
         title="Нужна точная цена?"
         description="Точную стоимость мастер называет после осмотра изделия. Позвоните — подскажем по телефону."
       />
-
-      <script {...jsonLdScriptProps(faqPageJsonLd(PRICE_FAQ))} />
     </>
   );
 }

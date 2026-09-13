@@ -9,7 +9,7 @@
  * BreadcrumbList здесь НЕ собирается — его отдаёт готовый компонент
  * layout/Breadcrumbs, чтобы разметка и видимые крошки не разъезжались.
  */
-import type { ContactInfoData, FaqItem, Review, Service, WeekdayIso } from '@/types';
+import type { ContactInfoData, Review, Service, WeekdayIso } from '@/types';
 import { SITE_URL } from '@/lib/constants';
 
 /** Schema.org ждёт английские имена дней; ISO-номер недели → строка. */
@@ -170,19 +170,6 @@ export function reviewsPageJsonLd(
           review: reviews.map(reviewJsonLd),
         }
       : {}),
-  };
-}
-
-/** Частые вопросы — FAQPage. */
-export function faqPageJsonLd(items: FaqItem[]) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: items.map((item) => ({
-      '@type': 'Question',
-      name: item.question,
-      acceptedAnswer: { '@type': 'Answer', text: item.answer },
-    })),
   };
 }
 

@@ -105,45 +105,79 @@ export function Header({ nav, contacts, className, id }: HeaderProps) {
 }
 
 function DesktopItem({ item, pathname }: { item: NavLink; pathname: string }) {
+  const [open, setOpen] = useState(false);
   const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
 
+  // Закрываем подменю по Escape и при переходе на другую страницу.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
+
+  useEffect(() => setOpen(false), [pathname]);
+
+  const link = (
+    <Link
+      href={item.href}
+      aria-current={active ? 'page' : undefined}
+      aria-expanded={item.children ? open : undefined}
+      aria-haspopup={item.children ? 'true' : undefined}
+      className={cn(
+        'flex h-11 items-center gap-1 rounded-lg px-3 font-medium',
+        'hover:bg-bg-muted',
+        active && 'text-accent',
+      )}
+    >
+      {item.label}
+      {item.children && <Icon name="chevron-down" size={16} />}
+    </Link>
+  );
+
+  if (!item.children) {
+    return <li className="relative">{link}</li>;
+  }
+
   return (
-    <li className="group relative">
-      <Link
-        href={item.href}
-        aria-current={active ? 'page' : undefined}
+    <li
+      className="relative"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+      // Открытием управляет состояние, а не :hover и :focus-within.
+      // На CSS-варианте подменю залипало: клик оставлял фокус на ссылке,
+      // и focus-within держал панель открытой после ухода курсора.
+      onFocus={() => setOpen(true)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+          setOpen(false);
+        }
+      }}
+    >
+      {link}
+
+      <ul
         className={cn(
-          'flex h-11 items-center gap-1 rounded-lg px-3 font-medium',
-          'hover:bg-bg-muted',
-          active && 'text-accent',
+          'absolute top-full left-0 z-[var(--z-dropdown)] min-w-56',
+          'rounded-xl border border-border bg-surface p-2 shadow-md',
+          'transition-opacity duration-[var(--duration-fast)] ease-standard',
+          open ? 'visible opacity-100' : 'invisible opacity-0',
         )}
       >
-        {item.label}
-        {item.children && <Icon name="chevron-down" size={16} />}
-      </Link>
-
-      {item.children && (
-        <ul
-          className={cn(
-            'invisible absolute top-full left-0 z-[var(--z-dropdown)] min-w-56 opacity-0',
-            'rounded-xl border border-border bg-surface p-2 shadow-md',
-            'transition-opacity duration-[var(--duration-fast)] ease-standard',
-            'group-hover:visible group-hover:opacity-100',
-            'group-focus-within:visible group-focus-within:opacity-100',
-          )}
-        >
-          {item.children.map((child) => (
-            <li key={child.href}>
-              <Link
-                href={child.href}
-                className="flex min-h-11 items-center rounded-lg px-3 hover:bg-bg-muted"
-              >
-                {child.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+        {item.children.map((child) => (
+          <li key={child.href}>
+            <Link
+              href={child.href}
+              tabIndex={open ? undefined : -1}
+              className="flex min-h-11 items-center rounded-lg px-3 hover:bg-bg-muted"
+            >
+              {child.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </li>
   );
 }

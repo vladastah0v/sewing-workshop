@@ -13,11 +13,10 @@ import { MessengerBadges } from '@/components/ui/MessengerBadges';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { CONTACTS } from '@/content/contacts';
-import { cn } from '@/lib/utils';
 
 export function CtaSection({ title, description, className, id }: CtaSectionProps) {
   return (
-    <Section id={id} background="muted" className={cn('bg-stitch', className)}>
+    <Section id={id} background="muted" className={className}>
       <Container width="narrow">
         <SectionHeading title={title} subtitle={description} align="center" />
 

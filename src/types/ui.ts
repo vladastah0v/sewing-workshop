@@ -10,7 +10,6 @@ import type { ApiError, LeadSource, LeadResponseData, ReviewResponseData } from 
 import type {
   BreadcrumbItem,
   ContactInfoData,
-  FaqItem,
   IconName,
   ImageAsset,
   PortfolioItem,
@@ -399,7 +398,8 @@ export interface MapEmbedProps extends BaseProps {
 
 export interface HeroSectionProps extends BaseProps {
   title: string;
-  subtitle: string;
+  /** Подзаголовок необязателен: на главной он убран решением заказчика. */
+  subtitle?: string;
   /** УТП-буллиты: срок от 1 дня, гарантия 30 дней. */
   highlights?: string[];
   image?: ImageAsset;
@@ -414,11 +414,6 @@ export interface ServicesSectionProps extends BaseProps {
   moreHref?: string;
 }
 
-export interface AdvantagesSectionProps extends BaseProps {
-  items: { id: string; title: string; description: string; iconName?: IconName }[];
-  heading?: string;
-}
-
 export interface PortfolioSectionProps extends BaseProps {
   items: PortfolioItem[];
   heading?: string;
@@ -429,11 +424,6 @@ export interface PriceTeaserSectionProps extends BaseProps {
   categories: PriceCategoryData[];
   heading?: string;
   moreHref?: string;
-}
-
-export interface FaqSectionProps extends BaseProps {
-  items: FaqItem[];
-  heading?: string;
 }
 
 export interface MapSectionProps extends BaseProps {

@@ -12,7 +12,7 @@ const WEEKDAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 /** Подвал: навигация, контакты, режим работы, политика. */
 export function Footer({ nav, contacts, className, id }: FooterProps) {
   return (
-    <footer id={id} className={cn('mt-16 bg-bg-inverse bg-thread text-text-inverse', className)}>
+    <footer id={id} className={cn('mt-16 bg-bg-inverse text-text-inverse', className)}>
       <Container className="grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-4 lg:py-16">
         <div className="flex flex-col gap-3">
           <p className="font-heading text-xl">{SITE_NAME}</p>
