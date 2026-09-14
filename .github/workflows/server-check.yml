@@ -23,6 +23,7 @@ jobs:
         # Порт 80 пока никто не слушает: «refused» значит, что ответ сервера дошёл,
         # «timeout» — что ответы теряются по дороге.
         run: |
+          set +e  # отказ на порту — ожидаемый результат, а не ошибка шага
           for port in 22 80; do
             timeout 15 bash -c "exec 3<>/dev/tcp/$SERVER_HOST/$port" 2>/dev/null
             code=$?
