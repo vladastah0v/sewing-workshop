@@ -128,6 +128,10 @@ jobs:
                 echo "$path → HTTP $(curl -s -o /dev/null -m 15 -w '%{http_code}' "$SITE_URL$path")"
               done
               echo "www → HTTP $(curl -s -o /dev/null -m 15 -w '%{http_code}' "https://www.latas-ufa.ru/")"
+              echo "http:// → $(curl -s -o /dev/null -m 15 -w '%{http_code} %{redirect_url}' "http://latas-ufa.ru/")"
+              echo "фото через next/image → $(curl -s -o /dev/null -m 30 -H 'Accept: image/webp' -w '%{http_code} %{content_type} %{size_download}B' "$SITE_URL/_next/image?url=%2Fimages%2Fworks%2Fwork-01.jpg&w=480&q=75")"
+              echo "canonical /portfolio → $(curl -s -m 15 "$SITE_URL/portfolio" | grep -o '<link rel="canonical" href="[^"]*"')"
+              echo "сертификат → $(echo | openssl s_client -connect latas-ufa.ru:443 -servername latas-ufa.ru 2>/dev/null | openssl x509 -noout -issuer -enddate | xargs)"
               exit 0
             fi
             sleep 10
