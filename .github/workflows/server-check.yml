@@ -34,6 +34,33 @@ jobs:
             esac
           done
 
+      - name: Осмотр сервера по SSH (только чтение)
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          # Ключ сервера получен ssh-keyscan в прошлом запуске:
+          # SHA256:KptD6sBCcz3LgiNiXewPbYwtKKiRnmJsAnQodoyLVWA
+          SERVER_HOST_KEY: 135.106.210.90 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA91IOVKBG5XHzHS532M+V5P9wF0cQWPUz5RLGVcY7rT
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "$SERVER_HOST_KEY" > ~/.ssh/known_hosts
+          ssh -o BatchMode=yes -o ConnectTimeout=20 root@"$SERVER_HOST" 'bash -s' <<'PROBE'
+          set +e
+          echo "== OS";      . /etc/os-release; echo "$PRETTY_NAME"; uname -m
+          echo "== CPU/RAM"; nproc; free -m
+          echo "== Disk";    df -h /
+          echo "== Swap";    swapon --show; echo "(end swap)"
+          echo "== Tools";   for t in docker rsync git curl; do printf '%s: ' $t; command -v $t || echo none; done
+          echo "== Docker compose plugin"; docker compose version 2>&1 | head -1
+          echo "== apt candidates"; apt-cache policy docker.io docker-compose-v2 2>/dev/null | grep -E '^[a-z]|Candidate'
+          echo "== Reachability"
+          for u in https://github.com https://registry-1.docker.io/v2/ https://download.docker.com/linux/ubuntu/ http://archive.ubuntu.com/ubuntu/ https://mirror.gcr.io/v2/; do
+            printf '%-45s ' "$u"; curl -s -o /dev/null -m 15 -w '%{http_code}\n' "$u" || echo fail
+          done
+          echo "== Listening"; ss -ltn
+          PROBE
+
       - name: SSH-приветствие и ключ сервера
         run: |
           ssh-keyscan -T 15 -t ed25519 "$SERVER_HOST" > host_key.txt 2>/dev/null || true
