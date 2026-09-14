@@ -8,19 +8,16 @@
 import type { Metadata } from 'next';
 import type { PriceGroup, ServiceSlug } from '@/types';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
 
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 import { Badge } from '@/components/ui/Badge';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
-import { PortfolioGallery } from '@/components/features/PortfolioGallery';
 import { PriceTable } from '@/components/features/PriceTable';
 import { ServiceGrid } from '@/components/features/ServiceGrid';
 import { CtaSection } from '@/components/sections/CtaSection';
 import { CONTACTS } from '@/content/contacts';
-import { PORTFOLIO } from '@/content/portfolio';
 import { PRICES } from '@/content/prices';
 import { SERVICES, getServiceBySlug } from '@/content/services';
 import { jsonLdScriptProps, serviceJsonLd } from '@/lib/seo';
@@ -63,7 +60,6 @@ export async function generateMetadata({
       title: service.seo?.title ?? service.title,
       description: service.seo?.description ?? service.shortDescription,
       url: canonical,
-      ...(service.image ? { images: [{ url: service.image.src }] } : {}),
     },
   };
 }
@@ -73,8 +69,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   const service = getServiceBySlug(slug);
   if (!service) notFound();
 
-  // Работы и цены этой же категории: пустые блоки не выводим.
-  const relatedWork = PORTFOLIO.filter((item) => item.category === service.category);
+  // Цены этой же категории.
   const relatedPrices = PRICES.filter((category) =>
     PRICE_GROUPS_BY_SERVICE[service.category].includes(category.group),
   );
@@ -94,67 +89,44 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
       <Section spacing="sm">
         <Container>
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-start">
-            <div className="flex flex-col gap-6">
-              <SectionHeading
-                level={1}
-                eyebrow="Услуга"
-                title={service.title}
-                subtitle={service.shortDescription}
-                className="mb-0 lg:mb-0"
-              />
+          <div className="flex max-w-3xl flex-col gap-6">
+            <SectionHeading
+              level={1}
+              eyebrow="Услуга"
+              title={service.title}
+              subtitle={service.shortDescription}
+              className="mb-0 lg:mb-0"
+            />
 
-              <dl className="flex flex-wrap gap-x-10 gap-y-4">
-                <div className="flex flex-col gap-1">
-                  <dt className="text-sm text-text-muted">Стоимость</dt>
-                  <dd className="font-heading text-2xl">
-                    {service.priceFrom === null ? 'по замерам' : `от ${formatPrice(service.priceFrom)}`}
-                  </dd>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <dt className="text-sm text-text-muted">Срок</dt>
-                  <dd className="font-heading text-2xl">{formatLeadTime(service.leadTimeDays)}</dd>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <dt className="text-sm text-text-muted">Гарантия</dt>
-                  <dd className="font-heading text-2xl">30 дней</dd>
-                </div>
-              </dl>
+            <dl className="flex flex-wrap gap-x-10 gap-y-4">
+              <div className="flex flex-col gap-1">
+                <dt className="text-sm text-text-muted">Стоимость</dt>
+                <dd className="font-heading text-2xl">
+                  {service.priceFrom === null ? 'по замерам' : `от ${formatPrice(service.priceFrom)}`}
+                </dd>
+              </div>
+              <div className="flex flex-col gap-1">
+                <dt className="text-sm text-text-muted">Срок</dt>
+                <dd className="font-heading text-2xl">{formatLeadTime(service.leadTimeDays)}</dd>
+              </div>
+              <div className="flex flex-col gap-1">
+                <dt className="text-sm text-text-muted">Гарантия</dt>
+                <dd className="font-heading text-2xl">30 дней</dd>
+              </div>
+            </dl>
 
-              {service.description && (
-                <p className="text-lg text-text-muted">{service.description}</p>
-              )}
+            {service.description && (
+              <p className="text-lg text-text-muted">{service.description}</p>
+            )}
 
-              {service.popular && <Badge tone="accent">Чаще всего заказывают</Badge>}
-            </div>
-
-            {service.image && (
-              <Image
-                src={service.image.src}
-                alt={service.image.alt}
-                width={service.image.width}
-                height={service.image.height}
-                priority
-                sizes="(min-width: 1024px) 560px, 100vw"
-                className="w-full rounded-xl border border-border object-cover"
-              />
+            {service.popular && (
+              <Badge tone="accent" className="self-start">
+                Чаще всего заказывают
+              </Badge>
             )}
           </div>
         </Container>
       </Section>
-
-      {relatedWork.length > 0 && (
-        <Section>
-          <Container>
-            <SectionHeading
-              title="Примеры работ"
-              subtitle="Фотографии сделаны в мастерской, до и после."
-              action={{ label: 'Все работы', href: '/portfolio' }}
-            />
-            <PortfolioGallery items={relatedWork} showFilters={false} columns={3} />
-          </Container>
-        </Section>
-      )}
 
       <Section background="subtle">
         <Container>

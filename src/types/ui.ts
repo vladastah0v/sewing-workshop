@@ -12,7 +12,6 @@ import type {
   ContactInfoData,
   IconName,
   ImageAsset,
-  PortfolioItem,
   PriceCategoryData,
   Service,
   ServiceSlug,
@@ -333,12 +332,6 @@ export interface ServiceGridProps extends BaseProps {
   emptyMessage?: string;
 }
 
-export interface ServiceFilterProps extends BaseProps {
-  categories: { value: ServiceSlug; label: string; count: number }[];
-  value: ServiceSlug | 'all';
-  onChange: (value: ServiceSlug | 'all') => void;
-}
-
 export interface PriceTableProps extends BaseProps {
   categories: PriceCategoryData[];
   /** Дисклеймер о примерных ценах (ТЗ п.5.3). default: true */
@@ -347,26 +340,9 @@ export interface PriceTableProps extends BaseProps {
   defaultOpenGroup?: string;
 }
 
-export interface PortfolioGalleryProps extends BaseProps {
-  items: PortfolioItem[];
-  showFilters?: boolean; // default: true
-  columns?: 2 | 3 | 4; // default: 3
-  /** Сколько показать до кнопки Показать ещё. */
-  initialCount?: number;
-}
-
-export interface PortfolioCardProps extends BaseProps {
-  item: PortfolioItem;
-  onOpen?: (item: PortfolioItem) => void;
-}
-
-export interface BeforeAfterSliderProps extends BaseProps {
-  before: { src: string; alt: string };
-  after: { src: string; alt: string };
-  /** Стартовая позиция разделителя, 0..100. default: 50 */
-  initialPosition?: number;
-  /** Подписи под слайдером. default: До / После */
-  labels?: { before: string; after: string };
+export interface WorksCarouselProps extends BaseProps {
+  /** Фотографии работ, без подписей. */
+  images: ImageAsset[];
 }
 
 export interface ContactInfoProps extends BaseProps {
@@ -414,7 +390,7 @@ export interface ServicesSectionProps extends BaseProps {
 }
 
 export interface PortfolioSectionProps extends BaseProps {
-  items: PortfolioItem[];
+  images: ImageAsset[];
   heading?: string;
   moreHref?: string;
 }

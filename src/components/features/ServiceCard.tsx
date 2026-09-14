@@ -6,7 +6,6 @@
  * который передаёт onOrderClick.
  */
 
-import Image from 'next/image';
 import Link from 'next/link';
 
 import type { ServiceCardProps } from '@/types';
@@ -75,17 +74,6 @@ export function ServiceCard({
       interactive
       className={cn('flex flex-col overflow-hidden', className)}
     >
-      {service.image && (
-        <Image
-          src={service.image.src}
-          alt={service.image.alt}
-          width={service.image.width}
-          height={service.image.height}
-          sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
-          className="aspect-[3/2] w-full object-cover"
-        />
-      )}
-
       <div className="flex flex-1 flex-col gap-4 p-6">
         <div className="flex items-start justify-between gap-3">
           <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-accent-subtle text-brand-700">

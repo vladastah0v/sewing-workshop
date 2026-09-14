@@ -85,8 +85,7 @@ project3.0/
 │   └── CONTRACTS.md            ← этот файл. Правится по согласованию всех
 ├── public/
 │   └── images/                 ← общая, но подпапки по владельцам:
-│       ├── portfolio/          ← Агент 3
-│       ├── services/           ← Агент 3
+│       ├── works/              ← Агент 3
 │       └── ui/                 ← Агент 1
 ├── src/
 │   ├── app/
@@ -366,11 +365,8 @@ project3.0/
 |---|---|---|
 | `ServiceCard` | `ServiceCardProps` | 5.2 |
 | `ServiceGrid` | `ServiceGridProps` | 5.2 |
-| `ServiceFilter` | `ServiceFilterProps` | 5.2 |
 | `PriceTable` | `PriceTableProps` | 5.3 |
-| `PortfolioGallery` | `PortfolioGalleryProps` | 5.4 |
-| `PortfolioCard` | `PortfolioCardProps` | 5.4 |
-| `BeforeAfterSlider` | `BeforeAfterSliderProps` | 5.4 |
+| `WorksCarousel` | `WorksCarouselProps` | 5.4 |
 | `ContactInfo` | `ContactInfoProps` | 5.8 |
 | `WorkStatusBadge` | `WorkStatusBadgeProps` | 5.8 «Открыто/Закрыто» |
 | `MapEmbed` | `MapEmbedProps` | 5.8 |
@@ -542,11 +538,9 @@ idle → (submit) → validating → submitting → success
 
 Не дефекты кода — их нельзя закрыть без данных заказчика, но и выкатывать с ними нельзя.
 
-1. **Портфолио: изображения не соответствуют alt.** Файлы в `/public/images/portfolio`
-   и `/public/images/services` — абстрактные текстуры ткани, а alt описывает конкретные
-   изделия. Нарушает WCAG (alt обязан описывать изображение) и вводит клиента в заблуждение:
-   портфолио из образцов ткани вместо выполненных работ. Нужны реальные снимки
-   и переписанные под них alt.
+1. ~~**Портфолио: изображения не соответствуют alt.**~~ Закрыто 14.09.2026: карточки-заглушки
+   портфолио и фото услуг удалены. Работы — реальные снимки заказчика в `/public/images/works`,
+   выводятся каруселью без подписей (`WORKS` в `src/content/works.ts`), карточки услуг — без фото.
 2. **Нет фото для hero главной.** Проп `image` у `HeroSection` временно убран, чтобы не
    отдавать 404 на LCP-изображении. Вернуть, когда появится `/images/ui/hero-workshop.jpg`.
 3. **Реквизиты оператора ПДн.** `CONTACTS.legalEntity` не заполнен, страница `/privacy`

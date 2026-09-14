@@ -52,7 +52,6 @@ export function localBusinessJsonLd(contacts: ContactInfoData) {
     url: SITE_URL,
     telephone: contacts.phone,
     email: contacts.email,
-    image: absoluteUrl('/images/services/repair.png'),
     priceRange: '₽₽',
     currenciesAccepted: 'RUB',
     paymentAccepted: 'Наличные, банковская карта',
@@ -98,7 +97,6 @@ export function serviceJsonLd(service: Service, contacts: ContactInfoData) {
     description: service.description ?? service.shortDescription,
     serviceType: service.title,
     url: absoluteUrl(path),
-    ...(service.image ? { image: absoluteUrl(service.image.src) } : {}),
     provider: {
       '@type': 'LocalBusiness',
       '@id': `${SITE_URL}/#organization`,

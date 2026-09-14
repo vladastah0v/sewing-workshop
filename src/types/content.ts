@@ -37,7 +37,6 @@ export interface Service {
   title: string;
   shortDescription: string;     // до 140 символов — для карточки
   description?: string;         // для детальной страницы
-  image?: ImageAsset;
   iconName?: IconName;
   /** Цена «от», в рублях, целое число. null = «по замерам». */
   priceFrom: number | null;
@@ -63,20 +62,6 @@ export interface PriceCategoryData {
   group: PriceGroup;
   title: string;
   items: PriceItem[];
-}
-
-export interface PortfolioItem {
-  id: string;
-  slug: string;
-  title: string;
-  category: ServiceSlug;
-  description?: string;
-  before?: ImageAsset;          // если есть — рендерим BeforeAfterSlider
-  after: ImageAsset;            // обязательное «после»
-  gallery?: ImageAsset[];
-  /** ISO 8601, YYYY-MM-DD. */
-  completedAt?: string;
-  tags?: string[];
 }
 
 export interface Review {

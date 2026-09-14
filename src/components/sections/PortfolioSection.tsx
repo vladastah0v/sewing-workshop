@@ -1,6 +1,6 @@
 /**
  * PortfolioSection — примеры работ на главной (ТЗ п.5.4). Владелец: Агент 2.
- * Сетку и лайтбокс держит PortfolioGallery (Агент 3); фильтры на главной не нужны.
+ * Ленту фотографий держит WorksCarousel (Агент 3).
  */
 
 import type { PortfolioSectionProps } from '@/types';
@@ -8,13 +8,10 @@ import { Container } from '@/components/ui/Container';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
-import { PortfolioGallery } from '@/components/features/PortfolioGallery';
-
-/** Сколько работ показываем в тизере на главной. */
-const TEASER_COUNT = 6;
+import { WorksCarousel } from '@/components/features/WorksCarousel';
 
 export function PortfolioSection({
-  items,
+  images,
   heading = 'Наши работы',
   moreHref,
   className,
@@ -26,17 +23,11 @@ export function PortfolioSection({
         <SectionHeading
           eyebrow="Портфолио"
           title={heading}
-          subtitle="Фотографии до и после — без ретуши."
           action={moreHref ? { label: 'Все работы', href: moreHref } : undefined}
         />
 
-        {items.length > 0 ? (
-          <PortfolioGallery
-            items={items.slice(0, TEASER_COUNT)}
-            showFilters={false}
-            columns={3}
-            initialCount={TEASER_COUNT}
-          />
+        {images.length > 0 ? (
+          <WorksCarousel images={images} />
         ) : (
           <EmptyState
             iconName="image"

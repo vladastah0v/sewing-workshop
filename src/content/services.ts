@@ -22,12 +22,6 @@ export const SERVICES: Service[] = [
     leadTimeDays: [1, 2],
     iconName: 'needle',
     popular: true,
-    image: {
-      src: '/images/services/repair.png',
-      alt: 'Мастер подшивает низ пальто на промышленной швейной машине',
-      width: 1200,
-      height: 800,
-    },
     seo: {
       title: 'Ремонт одежды — подгонка по фигуре, замена молнии',
       description:
@@ -51,12 +45,6 @@ export const SERVICES: Service[] = [
     leadTimeDays: [7, 21],
     iconName: 'scissors',
     popular: true,
-    image: {
-      src: '/images/services/tailoring.png',
-      alt: 'Раскладка выкройки и отрез шерстяной ткани на закройном столе',
-      width: 1200,
-      height: 800,
-    },
     seo: {
       title: 'Пошив одежды на заказ по эскизу и образцу',
       description:
@@ -79,12 +67,6 @@ export const SERVICES: Service[] = [
     priceFrom: null,
     leadTimeDays: [10, 30],
     iconName: 'ruler',
-    image: {
-      src: '/images/services/custom-fit.png',
-      alt: 'Сантиметровая лента и манекен с приколотым макетом изделия',
-      width: 1200,
-      height: 800,
-    },
     seo: {
       title: 'Пошив по индивидуальным меркам — 18 мерок, две примерки',
       description:

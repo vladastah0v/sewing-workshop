@@ -1,6 +1,6 @@
 /**
  * /portfolio — работы мастерской (ТЗ п.5.4). Владелец файла: Агент 3.
- * Фильтр, догрузка и просмотр «до/после» живут внутри PortfolioGallery,
+ * Листание живёт внутри клиентского WorksCarousel,
  * поэтому сама страница остаётся серверной и отдаёт метатеги.
  */
 
@@ -10,26 +10,19 @@ import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
-import { PortfolioGallery } from '@/components/features/PortfolioGallery';
+import { WorksCarousel } from '@/components/features/WorksCarousel';
 import { CtaSection } from '@/components/sections/CtaSection';
-import { PORTFOLIO } from '@/content/portfolio';
-import { itemListJsonLd, jsonLdScriptProps } from '@/lib/seo';
+import { WORKS } from '@/content/works';
 
 export const metadata: Metadata = {
-  title: 'Наши работы: фото до и после ремонта и пошива одежды',
+  title: 'Наши работы: фото изделий мастерской',
   description:
-    'Портфолио швейной мастерской: подгонка пальто, замена молний, ' +
-    'пошив по индивидуальным меркам. Фотографии до и после с описанием работы.',
+    'Портфолио швейной мастерской: фотографии изделий, сшитых на заказ и по ' +
+    'индивидуальным меркам.',
   alternates: { canonical: '/portfolio' },
 };
 
 export default function PortfolioPage() {
-  const withBeforeAfter = PORTFOLIO.filter((item) => item.before).length;
-
-  const jsonLd = itemListJsonLd(
-    PORTFOLIO.map((item) => ({ name: item.title, url: `/portfolio#${item.slug}` })),
-  );
-
   return (
     <>
       <Container>
@@ -42,9 +35,8 @@ export default function PortfolioPage() {
             level={1}
             eyebrow="Портфолио"
             title="Работы мастерской"
-            subtitle={`${PORTFOLIO.length} работ, из них ${withBeforeAfter} — со сравнением «до и после». Нажмите на карточку, чтобы рассмотреть.`}
           />
-          <PortfolioGallery items={PORTFOLIO} columns={3} initialCount={6} />
+          <WorksCarousel images={WORKS} />
         </Container>
       </Section>
 
@@ -53,8 +45,6 @@ export default function PortfolioPage() {
         title="Хотите так же?"
         description="Позвоните и опишите свою вещь — скажем, что с ней можно сделать и сколько это будет стоить."
       />
-
-      <script {...jsonLdScriptProps(jsonLd)} />
     </>
   );
 }

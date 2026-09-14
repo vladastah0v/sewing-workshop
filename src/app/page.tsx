@@ -14,9 +14,9 @@ import { PriceTeaserSection } from '@/components/sections/PriceTeaserSection';
 import { MapSection } from '@/components/sections/MapSection';
 
 import { CONTACTS } from '@/content/contacts';
-import { PORTFOLIO } from '@/content/portfolio';
 import { PRICES } from '@/content/prices';
 import { SERVICES } from '@/content/services';
+import { WORKS } from '@/content/works';
 
 export default function HomePage() {
   return (
@@ -30,7 +30,7 @@ export default function HomePage() {
         secondaryCta={{ label: 'Посмотреть цены', href: '/prices' }}
       />
       <ServicesSection services={SERVICES} moreHref="/services" />
-      <PortfolioSection items={PORTFOLIO} moreHref="/portfolio" />
+      <PortfolioSection images={WORKS} moreHref="/portfolio" />
       <PriceTeaserSection categories={PRICES} moreHref="/prices" />
       <MapSection contacts={CONTACTS} id="contacts" />
     </>

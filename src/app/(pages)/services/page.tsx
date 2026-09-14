@@ -39,7 +39,7 @@ export default function ServicesPage() {
             level={1}
             eyebrow="Услуги"
             title="Ремонт и пошив одежды"
-            subtitle="Три направления работы. Выберите подходящее — на странице услуги есть цены, сроки и примеры работ."
+            subtitle="Три направления работы. Выберите подходящее — на странице услуги есть цены и сроки."
           />
           <ServiceGrid services={SERVICES} columns={2} />
         </Container>
