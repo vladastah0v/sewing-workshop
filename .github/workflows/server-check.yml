@@ -1,0 +1,45 @@
+# Разовая проверка: доходят ли подключения с серверов GitHub до VDS в Selectel.
+# Ничего не меняет на сервере и не использует секреты. Запуск — вручную.
+name: Проверка доступа к серверу
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SERVER_HOST: 135.106.210.90
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Откуда подключаемся
+        run: curl -s -m 10 https://ipinfo.io/json || true
+
+      - name: TCP-порты 22 и 80
+        # Порт 80 пока никто не слушает: «refused» значит, что ответ сервера дошёл,
+        # «timeout» — что ответы теряются по дороге.
+        run: |
+          for port in 22 80; do
+            timeout 15 bash -c "exec 3<>/dev/tcp/$SERVER_HOST/$port" 2>/dev/null
+            code=$?
+            case $code in
+              0)   echo "port $port: OPEN (ответ дошёл)" ;;
+              124) echo "port $port: TIMEOUT (ответа нет)" ;;
+              *)   echo "port $port: REFUSED/ERROR code=$code (ответ дошёл, порт закрыт)" ;;
+            esac
+          done
+
+      - name: SSH-приветствие и ключ сервера
+        run: |
+          ssh-keyscan -T 15 -t ed25519 "$SERVER_HOST" > host_key.txt 2>/dev/null || true
+          if [ -s host_key.txt ]; then
+            echo "SSH: сервер ответил"
+            cat host_key.txt
+            ssh-keygen -lf host_key.txt
+          else
+            echo "SSH: ответа нет"
+          fi
