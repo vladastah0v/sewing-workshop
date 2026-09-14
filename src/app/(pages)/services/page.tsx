@@ -15,10 +15,10 @@ import { SERVICES } from '@/content/services';
 import { itemListJsonLd, jsonLdScriptProps } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'Услуги мастерской: ремонт, пошив и реставрация одежды',
+  title: 'Услуги мастерской: ремонт и пошив одежды',
   description:
     'Что мы делаем: ремонт и подгонка одежды от 500 ₽, пошив на заказ, пошив по ' +
-    'индивидуальным меркам, реставрация кожи и меха. Сроки от 1 дня, гарантия 30 дней.',
+    'индивидуальным меркам. Сроки от 1 дня, гарантия 30 дней.',
   alternates: { canonical: '/services' },
 };
 
@@ -38,8 +38,8 @@ export default function ServicesPage() {
           <SectionHeading
             level={1}
             eyebrow="Услуги"
-            title="Ремонт, пошив и реставрация одежды"
-            subtitle="Четыре направления работы. Выберите подходящее — на странице услуги есть цены, сроки и примеры работ."
+            title="Ремонт и пошив одежды"
+            subtitle="Три направления работы. Выберите подходящее — на странице услуги есть цены, сроки и примеры работ."
           />
           <ServiceGrid services={SERVICES} columns={2} />
         </Container>

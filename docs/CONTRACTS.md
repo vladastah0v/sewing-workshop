@@ -420,7 +420,7 @@ type ApiResponse<T> =
 |---|---|---|---|
 | `name` | string | **нет** | 2–80 символов. Вариант формы `inline` спрашивает только телефон; имя-заглушку подставлять запрещено |
 | `phone` | string | да | E.164 `+7XXXXXXXXXX`, маску снимает клиент |
-| `serviceType` | `ServiceSlug` | да | `repair` / `tailoring` / `custom-fit` / `restoration` / `other` |
+| `serviceType` | `ServiceSlug` | да | `repair` / `tailoring` / `custom-fit` / `other` |
 | `message` | string | нет | до 1000 символов |
 | `preferredTime` | `'any'` \| `'morning'` \| `'afternoon'` \| `'evening'` | нет | |
 | `preferredChannel` | `'phone'` \| `'whatsapp'` \| `'telegram'` | нет | |

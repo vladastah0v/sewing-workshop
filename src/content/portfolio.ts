@@ -60,79 +60,6 @@ export const PORTFOLIO: PortfolioItem[] = [
     tags: ['куртка', 'молния'],
   },
   {
-    id: 'pf-3',
-    slug: 'wedding-dress-fit',
-    title: 'Свадебное платье: подгонка к дате',
-    category: 'repair',
-    description:
-      'Платье куплено на размер больше. Ушили корсет по рельефам, укоротили подол ' +
-      'с подъюбником под туфли невесты. Две примерки за неделю до свадьбы.',
-    after: {
-      src: '/images/portfolio/wedding-after.png',
-      alt: 'Свадебное платье айвори после подгонки на манекене',
-      width: 800,
-      height: 1000,
-    },
-    gallery: [
-      {
-        src: '/images/portfolio/wedding-detail.png',
-        alt: 'Деталь свадебного платья: шнуровка корсета после подгонки',
-        width: 800,
-        height: 1000,
-      },
-    ],
-    completedAt: '2026-07-19',
-    tags: ['свадебное', 'срочно'],
-  },
-  {
-    id: 'pf-4',
-    slug: 'suit-custom',
-    title: 'Костюм по индивидуальным меркам',
-    category: 'custom-fit',
-    description:
-      'Двойка из шерсти на нестандартную фигуру: разворот плеч и разная длина рук. ' +
-      'Построили выкройку с нуля, три примерки.',
-    after: {
-      src: '/images/portfolio/suit-after.png',
-      alt: 'Тёмно-синий мужской костюм, сшитый по индивидуальным меркам',
-      width: 800,
-      height: 1000,
-    },
-    gallery: [
-      {
-        src: '/images/portfolio/suit-detail.png',
-        alt: 'Деталь пиджака: обработанная петля и подкладка в рукаве',
-        width: 800,
-        height: 1000,
-      },
-    ],
-    completedAt: '2026-06-28',
-    tags: ['костюм', 'по меркам'],
-  },
-  {
-    id: 'pf-5',
-    slug: 'leather-jacket-restore',
-    title: 'Кожаная куртка: реставрация',
-    category: 'restoration',
-    description:
-      'Потёртая косуха с разрывом по шву рукава. Восстановили шов, заменили подкладку, ' +
-      'обновили фурнитуру и обработали кожу.',
-    before: {
-      src: '/images/portfolio/leather-before.png',
-      alt: 'Кожаная куртка до реставрации: потёртости и разрыв на рукаве',
-      width: 800,
-      height: 1000,
-    },
-    after: {
-      src: '/images/portfolio/leather-after.png',
-      alt: 'Та же кожаная куртка после реставрации: ровный шов, новая фурнитура',
-      width: 800,
-      height: 1000,
-    },
-    completedAt: '2026-06-10',
-    tags: ['кожа', 'реставрация'],
-  },
-  {
     id: 'pf-6',
     slug: 'trousers-hem',
     title: 'Брюки: подшив с сохранением манжеты',
@@ -154,29 +81,6 @@ export const PORTFOLIO: PortfolioItem[] = [
     },
     completedAt: '2026-05-30',
     tags: ['брюки', 'подшив'],
-  },
-  {
-    id: 'pf-7',
-    slug: 'fur-coat-remake',
-    title: 'Шуба: перекрой в укороченную модель',
-    category: 'restoration',
-    description:
-      'Длинная мутоновая шуба вышла из носки. Перекроили в куртку до бедра, ' +
-      'из остатка меха сшили воротник-стойку.',
-    before: {
-      src: '/images/portfolio/fur-before.png',
-      alt: 'Длинная мутоновая шуба до переделки',
-      width: 800,
-      height: 1000,
-    },
-    after: {
-      src: '/images/portfolio/fur-after.png',
-      alt: 'Укороченная меховая куртка с воротником-стойкой после переделки',
-      width: 800,
-      height: 1000,
-    },
-    completedAt: '2026-05-12',
-    tags: ['мех', 'переделка'],
   },
   {
     id: 'pf-8',

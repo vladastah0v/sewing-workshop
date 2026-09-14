@@ -48,7 +48,7 @@ export function localBusinessJsonLd(contacts: ContactInfoData) {
     name: contacts.organizationName,
     description:
       'Швейная мастерская: ремонт и подгонка одежды, пошив на заказ и по индивидуальным ' +
-      'меркам, реставрация кожи и меха.',
+      'меркам.',
     url: SITE_URL,
     telephone: contacts.phone,
     email: contacts.email,

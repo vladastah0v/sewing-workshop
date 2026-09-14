@@ -15,7 +15,6 @@ const SERVICE_SLUGS: ServiceSlug[] = [
   'repair',
   'tailoring',
   'custom-fit',
-  'restoration',
   'other',
 ];
 

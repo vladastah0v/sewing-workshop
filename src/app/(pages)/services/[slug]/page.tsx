@@ -30,15 +30,14 @@ export const dynamicParams = false;
 
 /**
  * Какие группы прайса показывать на странице услуги.
- * Весь прайс целиком здесь лишний: на «Реставрации» не нужны шторы,
+ * Весь прайс целиком здесь лишний: на «Пошиве по меркам» не нужны шторы,
  * а на «Пошиве» — замена молнии в куртке.
  */
 const PRICE_GROUPS_BY_SERVICE: Record<ServiceSlug, PriceGroup[]> = {
   repair: ['women', 'men', 'outerwear', 'knitwear'],
-  tailoring: ['women', 'men', 'home-textile'],
+  tailoring: ['women', 'men', 'home-textile', 'other'],
   'custom-fit': ['women', 'men'],
-  restoration: ['leather-fur', 'wedding', 'outerwear'],
-  other: ['women', 'men', 'outerwear', 'knitwear', 'leather-fur', 'wedding', 'home-textile'],
+  other: ['women', 'men', 'outerwear', 'knitwear', 'home-textile', 'other'],
 };
 
 export function generateStaticParams() {

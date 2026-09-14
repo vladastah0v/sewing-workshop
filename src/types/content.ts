@@ -8,7 +8,6 @@ export type ServiceSlug =
   | 'repair'          // Ремонт одежды
   | 'tailoring'       // Пошив одежды на заказ
   | 'custom-fit'      // Пошив по индивидуальным меркам
-  | 'restoration'     // Реставрация и переделка
   | 'other';          // Прочее / затрудняюсь ответить
 
 /** Группы прайса (ТЗ п.5.3). */
@@ -17,9 +16,8 @@ export type PriceGroup =
   | 'men'             // Мужская одежда
   | 'outerwear'       // Верхняя одежда
   | 'knitwear'        // Трикотаж
-  | 'leather-fur'     // Кожа и мех
-  | 'wedding'         // Свадебное
-  | 'home-textile';   // Домашний текстиль
+  | 'home-textile'    // Домашний текстиль
+  | 'other';          // Прочее
 
 export interface ImageAsset {
   /** Путь от /public или абсолютный URL. */

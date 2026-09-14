@@ -21,7 +21,6 @@ export const SERVICE_LABELS: Record<ServiceSlug, string> = {
   repair: 'Ремонт одежды',
   tailoring: 'Пошив одежды на заказ',
   'custom-fit': 'Пошив по индивидуальным меркам',
-  restoration: 'Реставрация и переделка',
   other: 'Другое',
 };
 
@@ -31,9 +30,8 @@ export const PRICE_GROUP_LABELS: Record<PriceGroup, string> = {
   men: 'Мужская одежда',
   outerwear: 'Верхняя одежда',
   knitwear: 'Трикотаж',
-  'leather-fur': 'Кожа и мех',
-  wedding: 'Свадебные наряды',
   'home-textile': 'Домашний текстиль',
+  other: 'Прочее',
 };
 
 /** Главное меню. Единственный источник — используют Header и Footer. */

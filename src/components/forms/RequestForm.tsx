@@ -303,7 +303,7 @@ export function RequestForm({
                 hint={`Опишите изделие и задачу — до ${FORM_LIMITS.messageMax} символов`}
                 maxLength={FORM_LIMITS.messageMax}
                 disabled={submitting}
-                placeholder="Например: заменить молнию на кожаной куртке"
+                placeholder="Например: заменить молнию на куртке"
                 value={values.message}
                 error={errors.message}
                 onChange={(value) => set('message', value)}
