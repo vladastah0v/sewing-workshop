@@ -2,6 +2,9 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // Автономная сборка для Docker (см. Dockerfile). Локально выключена,
+  // чтобы `next start` не предупреждал о несовместимости.
+  ...(process.env.BUILD_STANDALONE === '1' ? { output: 'standalone' as const } : {}),
   images: {
     // ТЗ п.7.2: отдаём WebP/AVIF, ленивая загрузка у next/image по умолчанию.
     formats: ['image/avif', 'image/webp'],

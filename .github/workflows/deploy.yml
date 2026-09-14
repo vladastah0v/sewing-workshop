@@ -1,0 +1,137 @@
+# Выкладка сайта на сервер Selectel (VDS, Ubuntu 24.04).
+#
+# Почему через GitHub Actions: с компьютера заказчика сервер недоступен по SSH
+# (ответы сервера на адрес его VPN теряются по дороге), а с серверов GitHub — доступен.
+# Почему образ собирается здесь: у сервера 1 vCPU и 1 ГБ RAM — `next build` там
+# рискует упасть по памяти. Серверу остаётся загрузить готовый образ и запустить.
+#
+# Запуск — вручную (Actions → «Деплой на сервер» → Run workflow или `gh workflow run deploy.yml`),
+# по решению заказчика «обновлять по запросу».
+name: Деплой на сервер
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  SERVER_HOST: 135.106.210.90
+  # Публичный ключ сервера (не секрет). Отпечаток: SHA256:KptD6sBCcz3LgiNiXewPbYwtKKiRnmJsAnQodoyLVWA
+  SERVER_HOST_KEY: 135.106.210.90 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA91IOVKBG5XHzHS532M+V5P9wF0cQWPUz5RLGVcY7rT
+  DEPLOY_PATH: /opt/latas-site
+  SITE_URL: https://latas-ufa.ru
+  SITE_ADDRESS: latas-ufa.ru, www.latas-ufa.ru
+  APP_IMAGE: latas-site-app:latest
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Код из репозитория
+        uses: actions/checkout@v4
+
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Проверки кода (lint, typecheck)
+        run: |
+          npm ci
+          npm run lint
+          npm run typecheck
+
+      - name: Сборка образа сайта
+        run: |
+          docker build --build-arg NEXT_PUBLIC_SITE_URL="$SITE_URL" -t "$APP_IMAGE" .
+          docker save "$APP_IMAGE" | gzip -1 > app-image.tar.gz
+          ls -lh app-image.tar.gz
+
+      - name: Доступ к серверу по SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "$SERVER_HOST_KEY" > ~/.ssh/known_hosts
+          ssh -o BatchMode=yes -o ConnectTimeout=20 root@"$SERVER_HOST" 'echo "SSH OK: $(hostname)"'
+
+      - name: Подготовка сервера (Docker, подкачка, папка)
+        # Идемпотентно: при повторных запусках ничего не переустанавливает.
+        run: |
+          ssh -o BatchMode=yes root@"$SERVER_HOST" DEPLOY_PATH="$DEPLOY_PATH" 'bash -s' <<'SETUP'
+          set -euo pipefail
+          export DEBIAN_FRONTEND=noninteractive
+
+          if ! command -v docker >/dev/null 2>&1 || ! docker compose version >/dev/null 2>&1; then
+            echo "Устанавливаю Docker из репозитория Ubuntu"
+            apt-get update -q
+            apt-get install -y -q docker.io docker-compose-v2
+            systemctl enable --now docker
+          fi
+          docker --version
+          docker compose version
+
+          # 1 ГБ RAM: подкачка страхует запуск контейнеров от нехватки памяти.
+          if [ -z "$(swapon --show --noheadings)" ]; then
+            echo "Создаю файл подкачки 1 ГБ"
+            fallocate -l 1G /swapfile
+            chmod 600 /swapfile
+            mkswap /swapfile
+            swapon /swapfile
+          fi
+          if ! grep -q '^/swapfile ' /etc/fstab; then
+            echo '/swapfile none swap sw 0 0' >> /etc/fstab
+          fi
+          swapon --show
+
+          mkdir -p "$DEPLOY_PATH"
+          SETUP
+
+      - name: Загрузка и запуск на сервере
+        run: |
+          scp -o BatchMode=yes app-image.tar.gz docker-compose.yml Caddyfile root@"$SERVER_HOST":"$DEPLOY_PATH"/
+
+          # .env для docker compose на сервере — секретов в нём нет.
+          ssh -o BatchMode=yes root@"$SERVER_HOST" "cat > '$DEPLOY_PATH/.env'" <<ENV
+          NEXT_PUBLIC_SITE_URL=$SITE_URL
+          SITE_ADDRESS=$SITE_ADDRESS
+          ENV
+
+          ssh -o BatchMode=yes root@"$SERVER_HOST" DEPLOY_PATH="$DEPLOY_PATH" 'bash -s' <<'RUN'
+          set -euo pipefail
+          cd "$DEPLOY_PATH"
+          gunzip -c app-image.tar.gz | docker load
+          rm -f app-image.tar.gz
+          docker compose up -d --no-build --remove-orphans
+          docker image prune -f
+          docker compose ps
+          df -h / | tail -1
+          RUN
+
+      - name: Проверка сайта
+        # При первом запуске Caddy получает сертификат — это может занять до пары минут.
+        run: |
+          for i in $(seq 1 24); do
+            code=$(curl -s -o /dev/null -m 15 -w '%{http_code}' "$SITE_URL/" || true)
+            echo "попытка $i: $SITE_URL → HTTP $code"
+            if [ "$code" = "200" ]; then
+              for path in /services /prices /portfolio /contacts /privacy; do
+                echo "$path → HTTP $(curl -s -o /dev/null -m 15 -w '%{http_code}' "$SITE_URL$path")"
+              done
+              echo "www → HTTP $(curl -s -o /dev/null -m 15 -w '%{http_code}' "https://www.latas-ufa.ru/")"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Сайт не ответил 200 за 4 минуты — логи контейнеров:"
+          ssh -o BatchMode=yes root@"$SERVER_HOST" "cd '$DEPLOY_PATH' && docker compose logs --tail=60"
+          exit 1

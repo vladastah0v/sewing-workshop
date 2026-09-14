@@ -1,0 +1,6 @@
+# Адрес сайта задаёт SITE_ADDRESS в docker-compose.yml:
+# «latas-ufa.ru, www.latas-ufa.ru» — HTTPS автоматически; «:80» — только HTTP по IP.
+{$SITE_ADDRESS} {
+	encode zstd gzip
+	reverse_proxy app:3000
+}

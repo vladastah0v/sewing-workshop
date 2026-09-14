@@ -26,6 +26,19 @@ npm run dev          # http://localhost:3000
 | `npm run lint` | ESLint (flat-конфиг, `eslint.config.mjs`) |
 | `npm run lint:fix` | ESLint с автоисправлением |
 
+## Деплой на сервер
+
+Сервер — Selectel VDS (Ubuntu), сайт в Docker, HTTPS даёт Caddy.
+
+```bash
+# на сервере, в папке проекта, рядом с .env (NEXT_PUBLIC_SITE_URL, SITE_ADDRESS)
+docker compose up -d --build     # первый запуск и каждое обновление после git pull
+docker compose logs --tail=50    # логи
+```
+
+Файлы: `Dockerfile` (сборка `output: 'standalone'`), `docker-compose.yml` (сайт + Caddy),
+`Caddyfile` (прокси и сертификаты).
+
 ## Состояние
 
 Каркас и контракты готовы, компоненты — заглушки.

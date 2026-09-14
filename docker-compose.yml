@@ -1,0 +1,47 @@
+# Сайт + Caddy (HTTPS). Значения берутся из .env рядом с этим файлом на сервере.
+#
+# На сервере образ сайта не собирается: его собирает GitHub Actions
+# (.github/workflows/deploy.yml) и загружает готовым, а запуск идёт с --no-build.
+# Локально `docker compose up --build` собирает образ из Dockerfile как обычно.
+
+x-logging: &logging
+  driver: json-file
+  options:
+    # Диск сервера 10 ГБ — логи не должны расти бесконечно.
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  app:
+    image: latas-site-app:latest
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://example.ru}
+    restart: unless-stopped
+    expose:
+      - "3000"
+    logging: *logging
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      # Домен(ы) через запятую — Caddy сам получит и продлит сертификат Let's Encrypt.
+      # Пока домена нет — «:80», сайт открывается по IP без HTTPS.
+      SITE_ADDRESS: ${SITE_ADDRESS:-:80}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    logging: *logging
+
+volumes:
+  caddy_data:
+  caddy_config:
