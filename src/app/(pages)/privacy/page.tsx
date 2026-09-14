@@ -2,7 +2,7 @@
  * /privacy — политика обработки персональных данных (152-ФЗ). Владелец файла: Агент 3.
  *
  * ВАЖНО: это рабочий шаблон, а не согласованный юридический текст.
- * Реквизиты оператора (юрлицо, ИНН, ОГРН) — открытый вопрос в docs/CONTRACTS.md.
+ * Реквизиты оператора берутся из CONTACTS.legalEntity; пока он пуст — выводится пометка.
  *
  * Текст переписан 14.09.2026 под фактическое состояние сайта: форм обратной
  * связи нет, счётчиков аналитики нет, персональные данные сайт не собирает.
@@ -54,12 +54,14 @@ export default function PrivacyPage() {
           />
 
           <div className="flex flex-col gap-8 text-text-muted">
-            <p className="rounded-lg border border-warning/40 bg-warning/10 px-5 py-4 text-text">
-              <strong className="font-semibold">Черновик.</strong> Реквизиты оператора
-              и юридический адрес ещё не переданы заказчиком. Перед публикацией сайта текст
-              должен быть проверен юристом и дополнен реальными данными — места отмечены
-              как «реквизиты уточняются».
-            </p>
+            {!CONTACTS.legalEntity && (
+              <p className="rounded-lg border border-warning/40 bg-warning/10 px-5 py-4 text-text">
+                <strong className="font-semibold">Черновик.</strong> Реквизиты оператора
+                и юридический адрес ещё не переданы заказчиком. Перед публикацией сайта текст
+                должен быть проверен юристом и дополнен реальными данными — места отмечены
+                как «реквизиты уточняются».
+              </p>
+            )}
 
             <section className="flex flex-col gap-3">
               <h2 className="font-heading text-2xl text-text">1. Общие положения</h2>
@@ -72,7 +74,9 @@ export default function PrivacyPage() {
                 Оператор персональных данных —{' '}
                 {CONTACTS.legalEntity ? (
                   <>
-                    {CONTACTS.legalEntity.name}, ИНН {CONTACTS.legalEntity.inn}, ОГРН{' '}
+                    {CONTACTS.legalEntity.name}, ИНН {CONTACTS.legalEntity.inn},{' '}
+                    {/* 15 цифр — ОГРНИП индивидуального предпринимателя, 13 — ОГРН юрлица. */}
+                    {CONTACTS.legalEntity.ogrn.length === 15 ? 'ОГРНИП' : 'ОГРН'}{' '}
                     {CONTACTS.legalEntity.ogrn}
                   </>
                 ) : (
