@@ -352,7 +352,7 @@ project3.0/
 
 Порядок на главной зафиксирован (ТЗ п.5.1) и задан в `src/app/page.tsx`:
 
-`HeroSection` → `ServicesSection` → `PortfolioSection` → `PriceTeaserSection` → `MapSection`
+`HeroSection` → `ServicesSection` → `AboutSection` → `PortfolioSection` → `PriceTeaserSection` → `MapSection`
 
 `CtaSection` на главной больше нет — страницу закрывает блок контактов с картой.
 На внутренних страницах `CtaSection` показывает телефон, а не форму.

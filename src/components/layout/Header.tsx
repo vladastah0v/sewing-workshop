@@ -36,7 +36,7 @@ export function Header({ nav, contacts, className, id }: HeaderProps) {
       )}
     >
       <Container className="flex h-[4.5rem] items-center justify-between gap-6">
-        <Link href="/" className="font-heading text-xl whitespace-nowrap">
+        <Link href="/" className="font-script text-2xl leading-none whitespace-nowrap sm:text-3xl">
           {SITE_NAME}
         </Link>
 

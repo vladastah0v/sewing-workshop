@@ -8,7 +8,7 @@
 import type { ContactInfoData } from '@/types';
 
 export const CONTACTS: ContactInfoData = {
-  organizationName: 'Швейная мастерская ЛаТас',
+  organizationName: 'Швейная мастерская ЛатАс',
   phone: '+79033509264',
   phoneDisplay: '+7 (903) 350-92-64',
   email: 'daristarhova@mail.ru',

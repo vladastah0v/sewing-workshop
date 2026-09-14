@@ -14,7 +14,7 @@ export const SITE_URL =
  * В микроразметке Schema.org организацию называют через
  * CONTACTS.organizationName, а оператора ПДн — через CONTACTS.legalEntity.
  */
-export const SITE_NAME = 'Швейная мастерская ЛаТас';
+export const SITE_NAME = 'Швейная мастерская ЛатАс';
 
 /** Человекочитаемые названия категорий услуг. */
 export const SERVICE_LABELS: Record<ServiceSlug, string> = {

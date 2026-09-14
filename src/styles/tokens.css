@@ -72,6 +72,7 @@
   /* Переменные --font-*-family задаёт next/font в layout.tsx */
   --font-heading: var(--font-playfair), Georgia, "Times New Roman", serif;
   --font-body:    var(--font-manrope), -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-script:  var(--font-great-vibes), "Segoe Script", cursive;
 
   /* Шкала (rem, база 16px). Минимальный текст в макете — 16px. */
   --text-xs:   0.8125rem; /* 13px — только подписи/бейджи, не body */

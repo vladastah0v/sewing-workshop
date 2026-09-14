@@ -9,10 +9,12 @@
 
 import { HeroSection } from '@/components/sections/HeroSection';
 import { ServicesSection } from '@/components/sections/ServicesSection';
+import { AboutSection } from '@/components/sections/AboutSection';
 import { PortfolioSection } from '@/components/sections/PortfolioSection';
 import { PriceTeaserSection } from '@/components/sections/PriceTeaserSection';
 import { MapSection } from '@/components/sections/MapSection';
 
+import { ABOUT } from '@/content/about';
 import { CONTACTS } from '@/content/contacts';
 import { PRICES } from '@/content/prices';
 import { SERVICES } from '@/content/services';
@@ -30,6 +32,7 @@ export default function HomePage() {
         secondaryCta={{ label: 'Посмотреть цены', href: '/prices' }}
       />
       <ServicesSection services={SERVICES} moreHref="/services" />
+      <AboutSection id="about" heading={ABOUT.heading} paragraphs={ABOUT.paragraphs} />
       <PortfolioSection images={WORKS} moreHref="/portfolio" />
       <PriceTeaserSection categories={PRICES} moreHref="/prices" />
       <MapSection contacts={CONTACTS} id="contacts" />

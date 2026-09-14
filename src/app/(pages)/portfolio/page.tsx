@@ -12,7 +12,7 @@ import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { WorksCarousel } from '@/components/features/WorksCarousel';
 import { CtaSection } from '@/components/sections/CtaSection';
-import { WORKS } from '@/content/works';
+import { WORKS, WORKS_ALBUM_URL } from '@/content/works';
 
 export const metadata: Metadata = {
   title: 'Наши работы: фото изделий мастерской',
@@ -37,6 +37,14 @@ export default function PortfolioPage() {
             title="Работы мастерской"
           />
           <WorksCarousel images={WORKS} />
+          <a
+            href={WORKS_ALBUM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 inline-block text-lg font-semibold text-text-link hover:text-accent-active"
+          >
+            Здесь вы можете посмотреть остальные работы нашей мастерской
+          </a>
         </Container>
       </Section>
 

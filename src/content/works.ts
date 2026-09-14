@@ -17,4 +17,10 @@ export const WORKS: ImageAsset[] = [
   { src: '/images/works/work-09.jpg', alt: 'Вечернее платье', width: 774, height: 1032 },
   { src: '/images/works/work-10.jpg', alt: 'Детское праздничное платье', width: 868, height: 1156 },
   { src: '/images/works/work-11.jpg', alt: 'Концертное платье', width: 868, height: 1156 },
+  { src: '/images/works/work-12.jpg', alt: 'Одежда для собаки', width: 868, height: 1156 },
+  { src: '/images/works/work-13.jpg', alt: 'Одежда для собаки', width: 630, height: 688 },
+  { src: '/images/works/work-14.jpg', alt: 'Шторы', width: 868, height: 1156 },
 ];
+
+/** Остальные работы — альбом мастерской на Яндекс Диске. */
+export const WORKS_ALBUM_URL = 'https://disk.yandex.ru/a/yXyHsdEiv06Y5g';

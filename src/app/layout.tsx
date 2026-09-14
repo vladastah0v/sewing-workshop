@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Manrope, Playfair_Display } from 'next/font/google';
+import { Great_Vibes, Manrope, Playfair_Display } from 'next/font/google';
 
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -14,6 +14,14 @@ const playfair = Playfair_Display({
   subsets: ['cyrillic', 'latin'],
   weight: ['500', '600', '700'],
   variable: '--font-playfair',
+  display: 'swap',
+});
+
+/* Рукописный — только для названия мастерской: в шапке и в блоке «О мастерской». */
+const greatVibes = Great_Vibes({
+  subsets: ['cyrillic', 'latin'],
+  weight: '400',
+  variable: '--font-great-vibes',
   display: 'swap',
 });
 
@@ -48,7 +56,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru" className={`${playfair.variable} ${manrope.variable}`}>
+    <html lang="ru" className={`${playfair.variable} ${greatVibes.variable} ${manrope.variable}`}>
       <body>
         <PageBackground />
         <a className="skip-link" href="#main">

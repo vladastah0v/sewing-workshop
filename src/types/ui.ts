@@ -211,7 +211,8 @@ export interface SectionProps extends BaseProps {
 export interface SectionHeadingProps extends BaseProps {
   /** Уровень заголовка. На странице h1 ровно один. default: 2 */
   level?: 1 | 2 | 3;
-  title: string;
+  /** Строка или разметка — например, название мастерской рукописным шрифтом. */
+  title: ReactNode;
   subtitle?: string;
   /** Мелкая надпись над заголовком. */
   eyebrow?: string;
@@ -387,6 +388,12 @@ export interface ServicesSectionProps extends BaseProps {
   heading?: string;
   /** Ссылка Все услуги. */
   moreHref?: string;
+}
+
+export interface AboutSectionProps extends BaseProps {
+  /** Продолжение заголовка после названия мастерской. */
+  heading: string;
+  paragraphs: string[];
 }
 
 export interface PortfolioSectionProps extends BaseProps {
