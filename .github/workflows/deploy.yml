@@ -135,6 +135,8 @@ jobs:
               for href in $(curl -s -m 15 "$SITE_URL/" | grep -o '<link rel="\(icon\|apple-touch-icon\)"[^>]*>' | grep -o 'href="[^"]*"' | cut -d'"' -f2); do
                 echo "иконка $href → $(curl -s -o /dev/null -m 15 -w '%{http_code} %{content_type} %{size_download}B' "$SITE_URL$href")"
               done
+              # Файл подтверждения прав в Яндекс Вебмастере: Яндекс периодически перепроверяет его, удалять нельзя.
+              echo "Яндекс Вебмастер → $(curl -s -m 15 "$SITE_URL/yandex_a93a6c660e5bdb6f.html" | grep -o 'Verification: [0-9a-f]*')"
               echo "сертификат → $(echo | openssl s_client -connect latas-ufa.ru:443 -servername latas-ufa.ru 2>/dev/null | openssl x509 -noout -issuer -enddate | paste -sd ' ' -)"
               exit 0
             fi
